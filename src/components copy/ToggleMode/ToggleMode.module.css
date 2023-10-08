@@ -1,0 +1,50 @@
+/* *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+} */
+.toggle-container{
+    color: white;
+    position: fixed;
+    z-index: 200;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.check{
+    position: relative;
+    display: block;
+    width: 40px;
+    height: 20px;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: ease-in 0.8s;
+    border: 1px solid white;
+}
+.check::before{
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    background: black;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    transition: 1s;
+    transform: translateY(-1px);
+}
+.check.dark::before{
+    background-color: white;
+    transform: translateX(120%) translateY(-1px);
+}
+.check.dark{
+    background-color: #292C35;
+}
+

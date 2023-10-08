@@ -1,0 +1,66 @@
+/* *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+} */
+.error-box{
+    z-index: 100;
+    position: fixed;
+    padding: 5px;
+    bottom: -50px;
+    right: 50%;
+    transform: translateX(50%);
+    background-color: white;
+    visibility: visible;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in;
+    box-shadow: -1px 1px 4px 0px rgba(0,0,0,0.54);
+-webkit-box-shadow: -1px 1px 4px 0px rgba(0,0,0,0.54);
+-moz-box-shadow: -1px 1px 4px 0px rgba(0,0,0,0.54);
+}
+.error-box.active{
+    transform: translateY(-20%);
+    transform: translateX(50%);
+    bottom: 10px;
+}
+.mark{
+    margin-right: 10px;
+    font-size: 2rem;
+}
+.mark.positive::before{
+    content: '\f00c';
+    font-family: fontAwesome;
+    height: 20px;
+    width: 20px;
+    color: green;
+}
+.mark.negative::before{
+    content: '\f00d';
+    font-family: fontAwesome;
+    height: 20px;
+    width: 20px;
+    color: red;
+}
+
+.error-message{
+    font-size: 1.3rem;
+}
+
+@media screen and (max-width: 480px) {
+    .error-box{
+        bottom: -100px;
+        width: fit-content;
+    }
+    .error-message{
+        font-size: 0.8rem;
+    }
+    .mark{
+        margin-right: 10px;
+        font-size: 1rem;
+    }
+}

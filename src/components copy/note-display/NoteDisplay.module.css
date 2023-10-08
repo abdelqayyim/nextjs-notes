@@ -1,0 +1,110 @@
+/* *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    tab-size: 2;
+} */
+.notes-display{
+    color: white;
+    width: 99%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: #292C35;
+}
+
+.clickedNote-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+.note-section{
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.description,.title{
+    border: 1px solid #DDDD;
+    /* background-color: #DDDD; */
+    width: 90%;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    margin-bottom: 10px;
+    outline: none;
+    transition-timing-function: ease-in;
+    transition-duration: 0.2s;
+}
+.title:focus, .title:hover,
+.description:focus, .description:hover{
+    transform: scale(1.01);
+    background-color: #3f434c !important;
+    color: white;
+}
+
+.title.dark, .description.dark{
+    background-color: #292C35;
+}
+
+
+/* The popup for changing the note language */
+.changeNote-lang{
+    position: fixed;
+}
+.note-btns{
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.btn-note{
+    background-color: #3898ec;
+    position: relative;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-size: 1.5vw;
+    font-family:'Bitter', sans-serif;
+    padding: 5px 10px;
+    border: none;
+    color: black;
+    transition-timing-function: ease-out;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* phone portrait */
+@media screen and (max-width: 500px) {
+    .notes-display{
+        
+    }
+    .note-section{
+        width: 100%;
+    }
+    .clickedNote-container{
+        width: 100%;
+    }
+}
+/* tablet portrait */
+@media screen and (min-width: 501px) and (max-width: 999px){
+    .clickedNote-container{
+        /* min-height: 100vh; */
+        /* height: fit-content; */
+    }
+}
+@media screen and (min-width: 1000px) {
+    .notes-display{
+        max-width: 1300px;
+    }
+    .clickedNote-container{
+        max-width: 1300px;
+    }
+}

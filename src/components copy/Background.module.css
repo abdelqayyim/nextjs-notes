@@ -1,0 +1,36 @@
+/* * {
+  box-sizing: border-box;
+  margin: 0;
+} */
+
+.background {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px;
+  background-color: #292c35;
+}
+.move-up {
+  justify-content: start;
+  background-color: #292c35;
+}
+
+/* phone portrait */
+@media screen and (max-width: 500px) {
+  .background {
+  }
+}
+/* tablet portrait */
+@media screen and (min-width: 501px) and (max-width: 999px) {
+  .background {
+
+  }
+}
+/* Desktop and other laptops */
+@media screen and (min-width: 1000px) {
+  .background {
+  }
+}

@@ -1,0 +1,44 @@
+/* *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+} */
+.note-suggestion{
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-y: scroll;
+    padding-top: 1px;
+    background-color: #3f434c;
+    border-radius: 5px;
+}
+.note-suggestion::-webkit-scrollbar {
+    display: none;
+}
+
+/* phone portrait */
+@media screen and (max-width: 500px) {
+    .note-suggestion{
+        visibility: hidden;
+        width: 0;
+    }
+}
+/* tablet portrait */
+@media screen and (min-width: 501px) and (max-width: 999px){
+    .note-suggestion{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        /* max-height: calc(100vh - 30vh);
+        min-height: calc(100vh - 30vh); */
+    }
+}
+@media screen and (min-width: 1000px) {
+    .note-suggestion{
+        /* max-height: calc(100vh - 18vh);
+        min-height: calc(100vh - 18vh); */
+    }
+}

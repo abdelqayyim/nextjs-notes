@@ -1,0 +1,95 @@
+/* *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+} */
+.newNote-popup{
+    z-index: 100;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    height: 300px;
+    width: 450px;
+    border-radius: 5px;
+    background-color: #292C35;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.addlannewNote.active{
+    visibility: visible;
+}
+.newNote-title{
+    width: 70%;
+    height: 15%;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    padding: 5px;
+    font-size: 1.7rem;
+    text-align: center;
+}
+.newNote-description{
+    width: 90%;
+    height: 50%;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    padding: 5px;
+    font-size: 1.3rem;
+    margin-top: 10px;
+    resize: none;
+}
+.newNote-btn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family:'Bitter', sans-serif;
+    font-size: 1.5rem;
+    margin-top: 25px;
+    padding: 2px;
+    width: 20%;
+    height: 15%;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid #3898ec;
+    padding: 5px;
+    background-color: white;
+}
+.newNote-btn:hover{
+    background-color: #3898ec;
+    color: white;
+}
+.overlay{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    visibility: hidden;
+}
+.overlay.active{
+    visibility: visible;
+    background-color: rgba(0,0,0,0.5);
+}
+.overlay-container{
+    position: relative;
+}
+@media screen and (max-width: 480px) {
+    .newNote-popup{
+        width: 80%;
+    }
+    .newNote-btn{
+        font-size: 1rem;
+        height: 30px;
+    }
+    .newNote-title{
+        font-size: 1rem;
+    }
+    .newNote-description{
+        font-size: 1rem;
+    }
+}

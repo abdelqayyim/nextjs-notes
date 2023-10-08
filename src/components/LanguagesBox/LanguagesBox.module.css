@@ -1,0 +1,28 @@
+/* * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+} */
+.top-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+.languages-box {
+  width: 100%;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 1300px;
+}
+.languages-box::-webkit-scrollbar {
+  display: none;
+}
+
