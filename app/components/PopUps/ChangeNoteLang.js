@@ -1,7 +1,7 @@
 import React, { useRef, useContext } from "react";
 import ReactDOM from "react-dom";
 import styles from "./ChangeNoteLang.module.css";
-import { AppProvider } from "../../app/AppContext";
+// import { AppProvider } from "../../app/AppContext";
 
 const ChangeNoteLang = (props) => {
   const curr = useContext(AppProvider);

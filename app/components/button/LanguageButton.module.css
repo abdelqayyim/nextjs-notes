@@ -3,6 +3,9 @@
     margin: 0;
     padding: 0;
 } */
+.link{
+    text-decoration: none;
+}
 .btn{
     position: relative;
     margin: 0 5px;
@@ -12,7 +15,7 @@
     padding: 5px 10px;
     border: none;
     background-color:transparent;
-    color: black;
+    color: white;
     transition-timing-function: ease-out;
     transition-duration: 0.2s;
     cursor: pointer;
@@ -20,12 +23,12 @@
     flex-direction: row;
     align-items: center;
     border: 1px solid black;
-    
-    
 }
 .btn:hover{
     transform: scale(1.1);
     border: 1px solid #3898ec;
+    background-color:#3898ec ;
+    color: black;
 }
 .btn.dark{
     color: white;

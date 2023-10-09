@@ -1,18 +1,16 @@
-import React from 'react'; 
+import React, {useEffect} from 'react'; 
 import styles from './Sidebar.module.css';
-
+import Link from 'next/link';
 
 const Sidebar = (props) => {
-    let languages = ["python", "Java", "C++", "C#"]
-    
     return (
         <div className={styles.sidebar}>
                     <div className={styles.user}>Logo</div>
             <ul className={styles.list}>
-                {languages.map((language)=>{
+                {props.languages.length > 0 && props.languages.map((language)=>{
                     return (
-                        <li className={styles["list-item"]}>
-                            {language }
+                        <li key={language._id} className={`${styles["list-item"]} ${language.name == props.currentLanguage? styles.active: ""}`}>
+                            <Link className={styles.link} href={`/${language.name}`}>{language.name }</Link>
                         </li>
                     )
                 })}

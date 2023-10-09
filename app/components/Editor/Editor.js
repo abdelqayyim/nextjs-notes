@@ -1,23 +1,23 @@
 import React, { useRef, useState, useContext } from "react";
-import Prism from "prismjs";
+// import Prism from "prismjs";
 // import "../Themes/prismc.css";
 import styles from "./Editor.module.css";
 import NoteText from "./NoteText";
 import NoteImage from "./NoteImage";
-import "prismjs/components/prism-python";
-import "prismjs/components/prism-c";
-import "prismjs/components/prism-cpp";
-import "prismjs/components/prism-csharp";
-import "prismjs/components/prism-sql";
-import "prismjs/components/prism-git";
-import "prismjs/components/prism-jsx";
-import "prismjs/components/prism-java";
-import "prismjs/components/prism-sass";
-import "prismjs/components/prism-markdown";
-import "prismjs/components/prism-swift";
-import "prismjs/components/prism-typescript";
+// import "prismjs/components/prism-python";
+// import "prismjs/components/prism-c";
+// import "prismjs/components/prism-cpp";
+// import "prismjs/components/prism-csharp";
+// import "prismjs/components/prism-sql";
+// import "prismjs/components/prism-git";
+// import "prismjs/components/prism-jsx";
+// import "prismjs/components/prism-java";
+// import "prismjs/components/prism-sass";
+// import "prismjs/components/prism-markdown";
+// import "prismjs/components/prism-swift";
+// import "prismjs/components/prism-typescript";
 
-import { AppProvider } from "../../app/AppContext";
+// import { AppProvider } from "../../app/AppContext";
 import NoteLanguage from "../button/NoteLanguage";
 
 const Editor = (props) => {

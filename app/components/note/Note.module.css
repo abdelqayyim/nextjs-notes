@@ -29,7 +29,8 @@ box-shadow: 0px 0px 5px -2px #000000;
 }
 .note-info:hover{
     /* transform: scale(1.03); */
-    border: 1px solid #3898ec;
+    /* border: 1px solid #3898ec; */
+    cursor: pointer;
 }
 .note-info.dark{
     color: white;

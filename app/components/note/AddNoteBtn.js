@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styles from "./AddNoteBtn.module.css";
-import { ACTIONS, AppProvider } from "../../app/AppContext";
+// import { ACTIONS, AppProvider } from "../../app/AppContext";
 
 const AddNoteBtn = (props) => {
   const curr = useContext(AppProvider);

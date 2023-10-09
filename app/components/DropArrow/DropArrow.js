@@ -6,12 +6,12 @@ import React, {
   useState,
 } from "react";
 import styles from "./DropArrow.module.css";
-import { ACTIONS, AppProvider } from "../../app/AppContext";
+// import { ACTIONS, AppProvider } from "../../app/AppContext";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
 const DropArrow = (props) => {
-  const curr = useContext(AppProvider);
+  // const curr = useContext(AppProvider);
   let [isActive, setIsActive] = useState(false);
   let button = useRef();
   let options = useRef();
@@ -30,10 +30,10 @@ const DropArrow = (props) => {
   });
 
   const addLanguageHandler = () => {
-    curr.callDispatch({ type: ACTIONS.TOGGLE_ADD_LANGUAGE_POPUP });
+    // curr.callDispatch({ type: ACTIONS.TOGGLE_ADD_LANGUAGE_POPUP });
   };
   const deleteLanguageHandler = () => {
-    curr.callDispatch({ type: ACTIONS.TOGGLE_DELETE_LANGUAGE_POPUP });
+    // curr.callDispatch({ type: ACTIONS.TOGGLE_DELETE_LANGUAGE_POPUP });
   };
   const arrowClickHandler = (e) => {
     setIsActive((prev) => !prev);
@@ -42,11 +42,11 @@ const DropArrow = (props) => {
   return (
     <Fragment>
       <div
-        className={`${styles["btn-dropdown"]} ${curr.currentAppMode}`}
+        className={`${styles["btn-dropdown"]}`}
         ref={button}
       >
         <button
-          className={`${styles.arrowBtn} ${curr.currentAppMode}`}
+          className={`${styles.arrowBtn} `}
           onClick={(e) => arrowClickHandler(e)}
         >
           {/* <div className={styles.arrow}>
@@ -56,8 +56,8 @@ const DropArrow = (props) => {
         <ul
           className={
             isActive
-              ? `${styles.dropInfo} ${styles.active} ${curr.currentAppMode}`
-              : `${styles.dropInfo} ${curr.currentAppMode}`
+              ? `${styles.dropInfo} ${styles.active} `
+              : `${styles.dropInfo}`
           }
           ref={options}
         >

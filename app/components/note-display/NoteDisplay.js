@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useCallback } from "react";
 import Note from "../note/Note";
 import styles from "./NoteDisplay.module.css";
-import { AppProvider } from "../../app/AppContext";
+// import { AppProvider } from "../../app/AppContext";
 import Editor from "../Editor/Editor";
 
 const NoteDisplay = (props) => {
