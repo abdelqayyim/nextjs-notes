@@ -3,16 +3,18 @@ import Image from 'next/image'
 import styles from './page.module.css'
 import Link from 'next/link';
 import LanguagesBox from './components/LanguagesBox/LanguagesBox';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { LOADING_STATE } from './redux/slice';
+import Message from './components/message-popup/Message';
 
 export default function Home() {
-  const URL = "https://fair-teal-gharial-coat.cyclic.app/languages/";
+  const currentLoadingState = useSelector((state) => state.languages.loading);
+ 
 
-
-  
   return (
     
     <div>
+      {currentLoadingState == LOADING_STATE.LOADING && <Message message={"Loading languages"}/>}
       <LanguagesBox/>
     </div>
   )

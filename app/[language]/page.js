@@ -8,9 +8,12 @@ import Note from "../components/note/Note";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchLanguages } from "../redux/slice";
 
+
 const page = (props) => {
     const dispatch = useDispatch();
-    const languages = useSelector((state)=>state.languages.value)
+    const languages = useSelector((state) => state.languages.value)
+
+
 
     useEffect(() => {
         if (languages.length === 0) {
@@ -35,11 +38,16 @@ const page = (props) => {
                     INfo
                 </div>
                 <div className={styles["extras-div"]}>
-                    extras
+                    <div>Button</div>
+                    <div>Button</div>
+                    <div>Button</div>
+                    <div>Button</div>
                 </div>
-                <div className={styles["notes-div"]}>
-                    {notes.map((note) => <Note title={note.title} description={ note.description}/>)}
+                <div className={styles["notes-div-parent"]}>
                     
+                    <div className={styles["notes-div-child"]}>
+                    {notes.map((note) => <Note title={note.title} description={ note.description}/>)}
+                    </div>
                 </div>
             </div>
         </div>

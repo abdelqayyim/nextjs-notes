@@ -39,9 +39,9 @@
     font-size: 1.3rem;
 }
 .list-item:hover{
-    border-left: 3px solid white;
     cursor: pointer;
 }
 .list-item.active{
     background-color:#0865b7;
+    border-left: 3px solid white;
 }

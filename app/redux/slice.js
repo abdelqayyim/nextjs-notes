@@ -17,7 +17,7 @@ export const appSlice = createSlice({
     extraReducers: (builder) => {
         builder
         .addCase(fetchLanguages.pending, (state) => {
-                state.loading = LOADING_STATE.LOADING;
+            state.loading = LOADING_STATE.LOADING;
       })
         .addCase(fetchLanguages.fulfilled, (state, action) => {
             state.loading = LOADING_STATE.SUCCEEDED;

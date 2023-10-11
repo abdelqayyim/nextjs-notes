@@ -4,6 +4,7 @@ import Background from './components/Background';
 import store from './redux/store';
 import AppProvider from './redux/AppProvider';
 
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
             {children}
           </AppProvider>
         </Background>
+        <div className="overlay"></div>
       </body>
     </html>
   )

@@ -1,5 +1,6 @@
 .loader-popup{
-    background-color: rgb(25, 24, 24);
+    /* background-color: rgb(25, 24, 24); */
+    background-color: transparent;
     position: fixed;
     left: 50%;
     top: 50%;

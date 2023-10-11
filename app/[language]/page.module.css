@@ -1,31 +1,57 @@
 .root-div{
-    background-color: green;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
     overflow: hidden;
 }
 .main-div{
-    flex: 1;
-    background-color:orange;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
 .detail-div{
-    background-color:red;
     height: 70px;
 }
 .extras-div{
-    background-color:purple;
-    height: 70px;
+    height: 50px;
+    display: flex;
+    flex: row;
+    align-items: center;
+    font-family: 'Rubik', sans-serif;
+    padding-left: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    border-bottom: 1px solid white;
 }
-.notes-div{
-    background-color:pink;
+.extras-div > div{
+    box-sizing: border-box;
+    margin-right: 10px;
+}
+.extras-div > div:hover{
+    cursor: pointer;
+    background-color:#0a84ee;
+    padding: 5px;
+    border-radius:5px;
+}
+.notes-div-parent{
+    position: relative;
     flex: 1;
+    padding:0 25px 10px 25px;
+    overflow-y: scroll;
+}
+.notes-div-child{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
     display: flex;
     flex-direction: row;
-    padding:0 25px ;
     flex-wrap: wrap;
     justify-content: center;
-    overflow: hidden;
+    margin-top: 10px;
 }
+.notes-div-child::-webkit-scrollbar{
+    display: none;
+  }
