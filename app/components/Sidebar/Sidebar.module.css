@@ -40,6 +40,7 @@
 }
 .list-item:hover{
     cursor: pointer;
+    background-color:#0865b7;
 }
 .list-item.active{
     background-color:#0865b7;

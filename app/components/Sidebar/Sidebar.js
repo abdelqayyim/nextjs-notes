@@ -9,8 +9,8 @@ const Sidebar = (props) => {
             <ul className={styles.list}>
                 {props.languages.length > 0 && props.languages.map((language)=>{
                     return (
-                        <li key={language._id} className={`${styles["list-item"]} ${language.name == props.currentLanguage? styles.active: ""}`}>
-                            <Link className={styles.link} href={`/${language.name}`}>{language.name }</Link>
+                        <li onClick={()=>props.clicked(language._id)} key={language._id} className={`${styles["list-item"]} ${language._id == props.currentLanguage? styles.active: ""}`}>
+                            <Link className={styles.link} href={`/${language.name.replace(/\s/g, "")}`}>{language.name }</Link>
                         </li>
                     )
                 })}
