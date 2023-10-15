@@ -7,10 +7,16 @@ import DropArrow from "../DropArrow/DropArrow";
 // import { AppProvider, ACTIONS } from "../../app/AppContext";
 import AddNoteBtn from "../note/AddNoteBtn";
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchLanguages } from "../../redux/slice";
+import { fetchLanguages, setCurrentLanguage, togglePopup } from "../../redux/slice";
+import { LOADING_STATE } from "../../redux/slice";
+import AddLanguagePopUp from "../PopUps/AddLanguagePopUp";
 
 const LanguagesBox = (props) => {
-  const URL = "https://fair-teal-gharial-coat.cyclic.app/languages/";
+  let state = useSelector((state) => state.languages);
+  const isOverlayActive = useSelector((state) => state.languages.inputPopup);
+  const [mode, setMode] = useState(""); //this is for whether a language is being added or deleted
+  let loadingState = state.loading;
+  let popupActive = state.inputPopup;
   
   const dispatch = useDispatch();
   useEffect(() => {
@@ -20,7 +26,6 @@ const LanguagesBox = (props) => {
   
   const languages = useSelector((state) => state.languages.value);
 
-  
   function titleCase(str) {
     
     str = str.toLowerCase().split(" ");
@@ -30,9 +35,18 @@ const LanguagesBox = (props) => {
     return str.join(" ");
   }
 
-  if (languages!== null) {
+  const languageButtonHandler = (id) => {
+    dispatch(setCurrentLanguage(id));
+  }
+
+  const changeMode = (newMode) => {
+    setMode(newMode);
+  }
+  
+  
+  if (languages!== null || languages !== undefined) {
     return (
-      <div className={`${styles["top-div"]}`}>
+      <div className={`${styles["top-div"]} ${isOverlayActive? styles["overlay-active"]:""}`}>
         <div className={`${styles["languages-box"]}`}>
         {languages.map((language) => {
             return (
@@ -40,27 +54,19 @@ const LanguagesBox = (props) => {
                 name={language.name}
                 key={language._id}
                 moveUp={props.moveUp}
+                clicked={()=>languageButtonHandler(language._id)}
               />
             );
           })}
-          <DropArrow />
+          {loadingState == LOADING_STATE.IDLE && <DropArrow mode={changeMode} />}
         </div>
+        {popupActive && <AddLanguagePopUp mode={ mode} />}
       </div>
     );
   }
   return (
     <div className={`${styles["top-div"]}`}>
       <div className={`${styles["languages-box"]}`}>
-      {/* {languages.map((language) => {
-          return (
-            <LanguageButton
-              name={language.name}
-              key={language._id}
-              moveUp={props.moveUp}
-            />
-          );
-        })} */}
-        <DropArrow />
       </div>
     </div>
   );

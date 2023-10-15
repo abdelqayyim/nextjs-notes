@@ -6,9 +6,10 @@ import React, {
   useState,
 } from "react";
 import styles from "./DropArrow.module.css";
-// import { ACTIONS, AppProvider } from "../../app/AppContext";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import { IonIcon } from '@ionic/react';
+import { chevronDownOutline, chevronUpOutline } from 'ionicons/icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchLanguages, setCurrentLanguage, togglePopup } from "../../redux/slice";
 
 const DropArrow = (props) => {
   // const curr = useContext(AppProvider);
@@ -16,6 +17,9 @@ const DropArrow = (props) => {
   let button = useRef();
   let options = useRef();
   let icon = useRef();
+  let state = useSelector((state) => state.languages);
+  let popupActive = state.inputPopup;
+  let dispatch = useDispatch();
 
   useEffect(() => {
     const closeDropdown = (event) => {
@@ -30,10 +34,14 @@ const DropArrow = (props) => {
   });
 
   const addLanguageHandler = () => {
-    // curr.callDispatch({ type: ACTIONS.TOGGLE_ADD_LANGUAGE_POPUP });
+    props.mode("Add")
+    setIsActive(false);
+    dispatch(togglePopup());
   };
   const deleteLanguageHandler = () => {
-    // curr.callDispatch({ type: ACTIONS.TOGGLE_DELETE_LANGUAGE_POPUP });
+    props.mode("Delete");
+    setIsActive(false);
+    dispatch(togglePopup());
   };
   const arrowClickHandler = (e) => {
     setIsActive((prev) => !prev);
@@ -41,36 +49,15 @@ const DropArrow = (props) => {
 
   return (
     <Fragment>
-      <div
-        className={`${styles["btn-dropdown"]}`}
-        ref={button}
-      >
-        <button
-          className={`${styles.arrowBtn} `}
-          onClick={(e) => arrowClickHandler(e)}
-        >
-          {/* <div className={styles.arrow}>
-                        { isActive? <FontAwesomeIcon icon={faAngleUp} className={`${styles.arrow}`} />: <FontAwesomeIcon icon={faAngleDown} className={`${styles.arrow}`} />}
-                    </div> */}
+      <div className={`${styles["btn-dropdown"]}`} ref={button}>
+        <button className={`${styles.arrowBtn} `} onClick={(e) => arrowClickHandler(e)}>
+          {isActive? <IonIcon className={""} role="" color="white" icon={chevronUpOutline} size="large"></IonIcon>: <IonIcon className={""} role="" color="white" icon={chevronDownOutline} size="medium"></IonIcon>}
         </button>
-        <ul
-          className={
-            isActive
-              ? `${styles.dropInfo} ${styles.active} `
-              : `${styles.dropInfo}`
-          }
-          ref={options}
-        >
-          <li
-            className={`${styles["add-languageOption"]}`}
-            onClick={addLanguageHandler}
-          >
+        <ul className={isActive ? `${styles.dropInfo} ${styles.active} `: `${styles.dropInfo}`} ref={options}>
+          <li className={`${styles["add-languageOption"]}`} onClick={addLanguageHandler}>
             Add Language
           </li>
-          <li
-            className={`${styles["delete-languagegOption"]}`}
-            onClick={deleteLanguageHandler}
-          >
+          <li className={`${styles["delete-languagegOption"]}`} onClick={deleteLanguageHandler}>
             Delete Language
           </li>
         </ul>

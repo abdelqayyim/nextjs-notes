@@ -8,18 +8,14 @@ const LanguageButton = (props) => {
   // const curr = useContext(AppProvider); // global context
   const router = useRouter();
 
-  const languageButtonHandler = () => {
-    // router.push('/notes/');
-  };
-
   
-  
+  //TODO: remove the spaces before passing it to the parameters or else you'll have %
 
   return (
-    <Link href={`/${props.name}`} className={styles.link}>
+    <Link href={`/${props.name.replace(/\s/g, "")}`} className={styles.link}>
       <button
       className={styles.btn}
-      onClick={languageButtonHandler}
+      onClick={props.clicked}
       name={props.name}
       id={props._id}
     >

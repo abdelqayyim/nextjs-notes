@@ -1,77 +1,41 @@
 import React, { useState, useContext, useRef } from "react";
 import styles from "./AddLanguagePopUp.module.css";
 import ReactDOM from "react-dom";
-import { ACTIONS, AppProvider } from "../../app/AppContext";
+import { useSelector, useDispatch } from 'react-redux';
+import { togglePopup } from "../../redux/slice";
+import { IonIcon } from '@ionic/react';
+import { closeOutline } from 'ionicons/icons';
+import {addLanguage} from "../../redux/slice";
 
 const AddLanguagePopUp = (props) => {
-  const curr = useContext(AppProvider);
-  const inputName = useRef();
-  let overlay = useRef();
-  const [overlayClicked, setOverlayClicked] = useState(false);
+  // used in languagesBox component
+  const isOverlayActive = useSelector((state) => state.languages.inputPopup);
+  const [inputValue, setInputValue] = useState("");
+  const overlay = useRef();
+  const dispatch = useDispatch();
 
-  const overlayHandler = () => {
-    curr.callDispatch({ type: ACTIONS.TOGGLE_ADD_LANGUAGE_POPUP });
-    setOverlayClicked(true);
-  };
-
-  const addNewLanguage = () => {
-    let input = inputName.current.value.trim();
-    if (input.length === 0) {
-      curr.callDispatch({
-        type: ACTIONS.SHOW_INPUT_RESPONSE,
-        payload: {
-          isErrorInput: true,
-          errorType: "negative",
-          message: `Input Field Cannot be Empty`,
-        },
-      });
-      setTimeout(() => {
-        curr.callDispatch({
-          type: ACTIONS.SHOW_INPUT_RESPONSE,
-          payload: {
-            isErrorInput: false,
-            errorType: "negative",
-            message: `Input Field Cannot be Empty`,
-          },
-        });
-      }, 2000);
-      return;
+  const overlayClickHandler = () => {
+    dispatch(togglePopup());
+  }
+  const submitHandler = (event) => {
+    if (props.mode == "Add") {
+      dispatch(addLanguage(inputValue)); 
     }
-    curr.addLanguage(input.toLowerCase());
-    setTimeout(() => {
-      document.querySelector(`.btn`).click(); //press the new button added
-    }, 100);
-  };
-
-  const enterKeyPress = (key) => {
-    if (key.code === "Enter") {
-      addNewLanguage();
-    }
-  };
-
+    //Call delete
+  }
   return ReactDOM.createPortal(
-    <div className="overlay-container" onKeyPress={enterKeyPress}>
-      <div
-        className={overlayClicked ? "overlay" : "overlay active"}
-        ref={overlay}
-        onClick={overlayHandler}
-      ></div>
-      <div
-        className={
-          overlayClicked ? "addlanguage-popup" : "addlanguage-popup active"
-        }
-      >
-        <input
-          placeholder="Name"
-          className="newLang-input"
-          ref={inputName}
-          autoFocus="true"
-        ></input>
-        <button className="add-btn" onClick={addNewLanguage}>
-          ADD
-        </button>
-      </div>
-    </div>,
+    <div ref={overlay} className={styles.overlay} onClick={(event)=>{if (overlay.current == event.target) {
+      overlayClickHandler();
+    }}}>
+      <div className={styles.popup}>
+          <IonIcon onClick={overlayClickHandler} className={styles["close-btn"]} role="" color="dark" icon={closeOutline} size="medium"></IonIcon>
+        <label for="input">{ props.mode} Language</label>
+        <input onChange={(event) =>setInputValue(event.target.value)} className={styles.input} type="text" id="input" name="userInput" value={inputValue} />
+          <button onClick={submitHandler}>Submit</button>
+        </div>
+    </div>
+    
+    ,
     document.querySelector(".overlay")
   );
 };

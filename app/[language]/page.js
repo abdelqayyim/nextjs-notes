@@ -6,23 +6,36 @@ import Sidebar from '../components/Sidebar/Sidebar';
 import NoteDisplay from '../components/note-display/NoteDisplay';
 import Note from "../components/note/Note";
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchLanguages } from "../redux/slice";
+import { fetchLanguages, setCurrentLanguage } from "../redux/slice";
+import { LOADING_STATE } from "../redux/slice";
+import Message from "../components/message-popup/Message";
 
 
 const page = (props) => {
     const dispatch = useDispatch();
-    const languages = useSelector((state) => state.languages.value)
-
-
-
+    const languages = useSelector((state) => state.languages.value);
+    let loadingState = useSelector((state) => state.languages.loading);
+    const currentLanguage = useParams().language;
+    const currentParamLang = decodeURIComponent(useParams().language);
+    let curr;
+    
     useEffect(() => {
         if (languages.length === 0) {
             // Dispatch the action to fetch languages when the component mounts
             dispatch(fetchLanguages());
         }
     }, [dispatch, languages]);
-    const currentLanguage = useParams().language;
-    let langObject = languages.filter((language) => language.name == currentLanguage);
+
+    for (let language of languages) {
+        if (language.name.replace(/\s/g, "") == currentParamLang) {
+            curr = language._id;
+            dispatch(setCurrentLanguage(language._id))
+            break;
+        }
+    }
+    
+    let langObject = languages.filter((language) => language._id == curr);
+    
     let notes = []
     langObject.map((obj) => {
         obj.notes.map((note) => {
@@ -30,9 +43,18 @@ const page = (props) => {
         })
     })
 
+    const languageOnClick = (id) => {
+        console.log("CLICKED-------");
+        console.log(id);
+        dispatch(setCurrentLanguage(id));
+    }
+    if (loadingState == LOADING_STATE.LOADING) {
+        return <Message message={"Loading Notes"} />;
+    }
+
     return (
         <div className={styles["root-div"]}>
-            <Sidebar languages={languages} currentLanguage={currentLanguage}></Sidebar>
+            <Sidebar clicked={languageOnClick } languages={languages} currentLanguage={curr}></Sidebar>
             <div className={styles["main-div"]}>
                 <div className={styles["detail-div"]}>
                     INfo
@@ -44,7 +66,6 @@ const page = (props) => {
                     <div>Button</div>
                 </div>
                 <div className={styles["notes-div-parent"]}>
-                    
                     <div className={styles["notes-div-child"]}>
                     {notes.map((note) => <Note title={note.title} description={ note.description}/>)}
                     </div>
@@ -53,5 +74,4 @@ const page = (props) => {
         </div>
     )
 };
-
 export default page;

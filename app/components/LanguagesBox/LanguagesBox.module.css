@@ -26,4 +26,7 @@
 .languages-box::-webkit-scrollbar {
   display: none;
 }
+.overlay-active{
+  pointer-events: none;
+}
 

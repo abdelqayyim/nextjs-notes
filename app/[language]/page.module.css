@@ -28,11 +28,11 @@
 .extras-div > div{
     box-sizing: border-box;
     margin-right: 10px;
+    padding: 5px;
 }
 .extras-div > div:hover{
     cursor: pointer;
     background-color:#0a84ee;
-    padding: 5px;
     border-radius:5px;
 }
 .notes-div-parent{
