@@ -1,0 +1,6 @@
+.container{
+    background-color: white;
+    width: 90%;
+    background-color: red;
+    flex: 1;
+}

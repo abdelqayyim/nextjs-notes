@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import styles from "./DropArrow.module.css";
-import { IonIcon } from '@ionic/react';
+// import { IonIcon } from '@ionic/react';
 import { chevronDownOutline, chevronUpOutline } from 'ionicons/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchLanguages, setCurrentLanguage, togglePopup } from "../../redux/slice";
@@ -51,7 +51,7 @@ const DropArrow = (props) => {
     <Fragment>
       <div className={`${styles["btn-dropdown"]}`} ref={button}>
         <button className={`${styles.arrowBtn} `} onClick={(e) => arrowClickHandler(e)}>
-          {isActive? <IonIcon className={""} role="" color="white" icon={chevronUpOutline} size="large"></IonIcon>: <IonIcon className={""} role="" color="white" icon={chevronDownOutline} size="medium"></IonIcon>}
+          {/* {isActive? <IonIcon className={""} role="" color="white" icon={chevronUpOutline} size="large"></IonIcon>: <IonIcon className={""} role="" color="white" icon={chevronDownOutline} size="medium"></IonIcon>} */}
         </button>
         <ul className={isActive ? `${styles.dropInfo} ${styles.active} `: `${styles.dropInfo}`} ref={options}>
           <li className={`${styles["add-languageOption"]}`} onClick={addLanguageHandler}>

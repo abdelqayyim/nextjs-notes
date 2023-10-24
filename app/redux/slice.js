@@ -10,6 +10,7 @@ export const appSlice = createSlice({
     initialState: {
         value: [],
         currentLanguageID: "",
+        currentNote: {noteID: null, noteTitle: null, noteDescription: null,noteDetail: null},
         loading: LOADING_STATE.IDLE,
         errorMessage: "",
         errorSign: "",
@@ -19,10 +20,13 @@ export const appSlice = createSlice({
         setCurrentLanguage: (state, action) => {
             state.currentLanguageID = action.payload
         }, 
+        setCurrentNote: (state, action) => {
+            state.currentNote = action.payload
+        },
         togglePopup: (state, action) => {
             state.inputPopup = !state.inputPopup
         },
-        resetError: (state, action) => {
+        resetError: (state, action) => { 
             state.errorMessage = "";
             state.errorSign = "";
         }
@@ -57,6 +61,21 @@ export const appSlice = createSlice({
                 state.errorMessage = action.error.message;
                 state.errorSign = "negative";
                 state.loading = LOADING_STATE.IDLE;
+            })
+        .addCase(deleteLanguage.pending,(state)=> {
+                state.loading = LOADING_STATE.LOADING;
+            })
+            .addCase(deleteLanguage.fulfilled, (state, action) => {
+                state.loading = LOADING_STATE.SUCCEEDED;
+                console.log(action);
+                state.value = action.payload;
+                state.loading = LOADING_STATE.IDLE;
+            })
+            .addCase(deleteLanguage.rejected, (state, action) => {
+                state.loading = LOADING_STATE.FAILED;
+                state.errorMessage = action.error.message;
+                state.errorSign = "negative";
+                state.loading = LOADING_STATE.IDLE;
             });
     }
 })
@@ -74,19 +93,49 @@ const fetchLanguages = createAsyncThunk(
         }
     }
 );
+const languageExists = (language, currentLanguages) => {
+    for (const lang of currentLanguages) {
+        if (lang.name.toLowerCase() === language.trim().toLowerCase()) {
+            return true;
+        }
+    }
+    return false;
+}
 const addLanguage = createAsyncThunk(
     'languages/addLanguage',
     async (language, { getState }) => {
         const state = getState();
         const languages = state.languages.value;
         try {
-            for (const lang of languages) {
-                if (lang.name.toLowerCase() === language.trim().toLowerCase()) {
-                    throw new Error("Language Already exists"); 
-                }
+            if (languageExists(language, languages)) {
+                throw new Error("Language Already exists"); 
             }
             const response = await fetch(URL + `${language}`, {
                 method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+        }
+        catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+)
+
+const deleteLanguage = createAsyncThunk(
+    'languages/deleteLanguage',
+    async (language, { getState }) => {
+        const state = getState();
+        const languages = state.languages.value;
+        try {
+            if (!languageExists(language, languages)) {
+                throw new Error("Language Does not Exists"); 
+            }
+            const response = await fetch(URL + `${language.toLowerCase()}`, {
+                method: 'DELETE',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -105,6 +154,6 @@ const addLanguage = createAsyncThunk(
 
 
 // Action creators are generated for each case reducer function
-export { fetchLanguages, addLanguage };
-export const { setCurrentLanguage, togglePopup, resetError } = appSlice.actions;
+export { fetchLanguages, addLanguage,deleteLanguage };
+export const { setCurrentLanguage, togglePopup, resetError, setCurrentNote } = appSlice.actions;
 export default appSlice.reducer;

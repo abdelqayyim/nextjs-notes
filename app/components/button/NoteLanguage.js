@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react'; 
-import ChangeNoteLang from '../PopUps/ChangeNoteLang';
+// import ChangeNoteLang from '../PopUps/ChangeNoteLang';
 import styles from './NoteLanguage.module.css';
 
 const NoteLanguage = (props) => {
@@ -17,9 +17,9 @@ const NoteLanguage = (props) => {
     return (
         <Fragment>
             <div className={ styles["note-lang"]} onClick={changeLang} >
-            {props.noteLanguage === "cs" ? "c#" : props.noteLanguage}
-        </div>
-            {showNoteChange && <ChangeNoteLang closePop={closePop} saveChange={ submitChange} /> }
+                {props.noteLanguage === "cs" ? "c#" : props.noteLanguage}
+            </div>
+            {/* {showNoteChange && <ChangeNoteLang closePop={closePop} saveChange={ submitChange} /> } */}
         </Fragment>
     )
 };

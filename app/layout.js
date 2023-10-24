@@ -1,7 +1,6 @@
 import './globals.css'
 import { Inter } from 'next/font/google';
 import Background from './components/Background';
-import store from './redux/store';
 import AppProvider from './redux/AppProvider';
 import InputError from './components/PopUps/InputError';
 
@@ -16,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+      {/* <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> */}
       <body className={inter.className}>
         <Background>
           <AppProvider>

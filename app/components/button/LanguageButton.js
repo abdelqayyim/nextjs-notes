@@ -12,7 +12,7 @@ const LanguageButton = (props) => {
   //TODO: remove the spaces before passing it to the parameters or else you'll have %
 
   return (
-    <Link href={`/${props.name.replace(/\s/g, "")}`} className={styles.link}>
+    <Link href={`/${props.name.replace(/\s/g, "")}`} as={ `${props.name.replace(/\s/g, "")}`} className={styles.link}>
       <button
       className={styles.btn}
       onClick={props.clicked}

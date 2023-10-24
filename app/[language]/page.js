@@ -1,9 +1,8 @@
 'use client'
-import styles from "./page.module.css";
+import styles from "./layout.module.css";
 import React, {useEffect} from 'react'; 
-import { useRouter, usePathname, useSearchParams, useParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import Sidebar from '../components/Sidebar/Sidebar';
-import NoteDisplay from '../components/note-display/NoteDisplay';
 import Note from "../components/note/Note";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchLanguages, setCurrentLanguage } from "../redux/slice";
@@ -15,7 +14,6 @@ const page = (props) => {
     const dispatch = useDispatch();
     const languages = useSelector((state) => state.languages.value);
     let loadingState = useSelector((state) => state.languages.loading);
-    const currentLanguage = useParams().language;
     const currentParamLang = decodeURIComponent(useParams().language);
     let curr;
     
@@ -43,34 +41,13 @@ const page = (props) => {
         })
     })
 
-    const languageOnClick = (id) => {
-        console.log("CLICKED-------");
-        console.log(id);
-        dispatch(setCurrentLanguage(id));
-    }
     if (loadingState == LOADING_STATE.LOADING) {
         return <Message message={"Loading Notes"} />;
     }
 
     return (
-        <div className={styles["root-div"]}>
-            <Sidebar clicked={languageOnClick } languages={languages} currentLanguage={curr}></Sidebar>
-            <div className={styles["main-div"]}>
-                <div className={styles["detail-div"]}>
-                    INfo
-                </div>
-                <div className={styles["extras-div"]}>
-                    <div>Button</div>
-                    <div>Button</div>
-                    <div>Button</div>
-                    <div>Button</div>
-                </div>
-                <div className={styles["notes-div-parent"]}>
-                    <div className={styles["notes-div-child"]}>
-                    {notes.map((note) => <Note title={note.title} description={ note.description}/>)}
-                    </div>
-                </div>
-            </div>
+        <div className={styles["notes-div-child"]}>
+            {notes.map((note) => <Note detail={note.noteDetail} title={note.title} description={note.description} id={note._id} />)}
         </div>
     )
 };

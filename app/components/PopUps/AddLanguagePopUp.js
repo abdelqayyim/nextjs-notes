@@ -3,9 +3,9 @@ import styles from "./AddLanguagePopUp.module.css";
 import ReactDOM from "react-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { togglePopup } from "../../redux/slice";
-import { IonIcon } from '@ionic/react';
-import { closeOutline } from 'ionicons/icons';
-import {addLanguage} from "../../redux/slice";
+// import { IonIcon } from '@ionic/react';
+// import { closeOutline } from 'ionicons/icons';
+import {addLanguage,deleteLanguage} from "../../redux/slice";
 
 const AddLanguagePopUp = (props) => {
   // used in languagesBox component
@@ -22,13 +22,14 @@ const AddLanguagePopUp = (props) => {
       dispatch(addLanguage(inputValue)); 
     }
     //Call delete
+    dispatch(deleteLanguage(inputValue)); 
   }
   return ReactDOM.createPortal(
     <div ref={overlay} className={styles.overlay} onClick={(event)=>{if (overlay.current == event.target) {
       overlayClickHandler();
     }}}>
       <div className={styles.popup}>
-          <IonIcon onClick={overlayClickHandler} className={styles["close-btn"]} role="" color="dark" icon={closeOutline} size="medium"></IonIcon>
+          {/* <IonIcon onClick={overlayClickHandler} className={styles["close-btn"]} role="" color="dark" icon={closeOutline} size="medium"></IonIcon> */}
         <label for="input">{ props.mode} Language</label>
         <input onChange={(event) =>setInputValue(event.target.value)} className={styles.input} type="text" id="input" name="userInput" value={inputValue} />
           <button onClick={submitHandler}>Submit</button>
