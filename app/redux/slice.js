@@ -14,7 +14,9 @@ export const appSlice = createSlice({
         loading: LOADING_STATE.IDLE,
         errorMessage: "",
         errorSign: "",
-        inputPopup: false, // this is for add/delete language
+        inputPopup: false, // this is for add/delete language,
+        takingNote: false, //this is for the add, delete button to show when the user is taking notes on a particular note,
+        viewingNotes: true,
   },
     reducers: {
         setCurrentLanguage: (state, action) => {
@@ -29,7 +31,19 @@ export const appSlice = createSlice({
         resetError: (state, action) => { 
             state.errorMessage = "";
             state.errorSign = "";
+        },
+        takingNote: (state, action)=>{
+            state.takingNote = action.payload; 
+            state.viewingNotes = false; 
+        },
+        viewingNotes: (state, action) => {
+            state.takingNote = false;  
+            state.viewingNotes = action.payload;  
+        },
+        addText: (state, _) => { //adding text to notes
+            state.currentNote.noteDetail = [...state.currentNote.noteDetail, { text: "Edit" }];
         }
+        
     },
     extraReducers: (builder) => {
         builder
@@ -52,8 +66,10 @@ export const appSlice = createSlice({
             })
             .addCase(addLanguage.fulfilled, (state, action) => {
                 state.loading = LOADING_STATE.SUCCEEDED;
-                console.log(action);
-                state.value = action.payload;
+                state.value = [...state.value, {_id:"",name:action.meta.arg, note:[]}];
+                console.log(state.value);
+                state.errorMessage = "Language Successfully Added";
+                state.errorSign = "positive";
                 state.loading = LOADING_STATE.IDLE;
             })
             .addCase(addLanguage.rejected, (state, action) => {
@@ -67,8 +83,9 @@ export const appSlice = createSlice({
             })
             .addCase(deleteLanguage.fulfilled, (state, action) => {
                 state.loading = LOADING_STATE.SUCCEEDED;
-                console.log(action);
-                state.value = action.payload;
+                state.value = state.value.filter(lang => lang.name !== action.meta.arg);
+                state.errorMessage = "Language Successfully Deleted";
+                state.errorSign = "positive";
                 state.loading = LOADING_STATE.IDLE;
             })
             .addCase(deleteLanguage.rejected, (state, action) => {
@@ -155,5 +172,5 @@ const deleteLanguage = createAsyncThunk(
 
 // Action creators are generated for each case reducer function
 export { fetchLanguages, addLanguage,deleteLanguage };
-export const { setCurrentLanguage, togglePopup, resetError, setCurrentNote } = appSlice.actions;
+export const { setCurrentLanguage, togglePopup, resetError, setCurrentNote,takingNote, addText,viewingNotes } = appSlice.actions;
 export default appSlice.reducer;

@@ -2,17 +2,20 @@ import React, {useEffect} from 'react';
 import styles from './Sidebar.module.css';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentLanguage } from '@/app/redux/slice';
+import { setCurrentLanguage, viewingNotes } from '@/app/redux/slice';
+
+import InputPopUp from '../PopUps/InputPopUp';
 
 const Sidebar = (props) => {
     const dispatch = useDispatch();
     const languages = useSelector((state) => state.languages.value);
     const currentLanguageID = useSelector((state) => state.languages.currentLanguageID);
 
+
     const languageOnClick = (id) => {
         dispatch(setCurrentLanguage(id));
+        dispatch(viewingNotes(true));
     }
-    console.log(languages.length);
 
     return (
         <div className={styles.sidebar}>
@@ -26,6 +29,7 @@ const Sidebar = (props) => {
                     )
                 })}
             </ul>
+            {props.popUpActive && <InputPopUp mode={"add-note"} />}
         </div>
     )
 };

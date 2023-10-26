@@ -51,7 +51,7 @@ const DropArrow = (props) => {
     <Fragment>
       <div className={`${styles["btn-dropdown"]}`} ref={button}>
         <button className={`${styles.arrowBtn} `} onClick={(e) => arrowClickHandler(e)}>
-          {/* {isActive? <IonIcon className={""} role="" color="white" icon={chevronUpOutline} size="large"></IonIcon>: <IonIcon className={""} role="" color="white" icon={chevronDownOutline} size="medium"></IonIcon>} */}
+          {isActive? <span class="material-symbols-outlined">expand_less</span>: <span class="material-symbols-outlined">expand_more</span>}
         </button>
         <ul className={isActive ? `${styles.dropInfo} ${styles.active} `: `${styles.dropInfo}`} ref={options}>
           <li className={`${styles["add-languageOption"]}`} onClick={addLanguageHandler}>

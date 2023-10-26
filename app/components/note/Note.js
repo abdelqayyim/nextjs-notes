@@ -5,7 +5,7 @@ import styles from "./Note.module.css";
 // import { trashOutline } from 'ionicons/icons';
 import { useRouter, usePathname } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentNote } from "@/app/redux/slice";
+import { setCurrentNote, toggleTakingNote } from "@/app/redux/slice";
 
 const Note = (props) => {
   const state = useSelector((state) => state.languages);
@@ -22,7 +22,6 @@ const Note = (props) => {
     let note = { noteID: props.id, noteTitle: props.title, noteDescription: props.description, noteDetail: props.detail };
     dispatch(setCurrentNote(note));
     router.push(`${pathname}/${props.id}`);
-    
   };
   
   return (
@@ -30,8 +29,7 @@ const Note = (props) => {
       <div className={styles["note-title"]}><span className={styles["custom-bullet"]}></span>{props.title}</div>
       <div className={styles["note-description"]}>{props.description}</div>
       <div className={styles.delete} onClick={deleteNoteHandler}>
-        {/* <TrashOutline color={'#00000'} title={"trash"} /> */}
-        {/* <IonIcon className="" role="" color="dark" icon={trashOutline} size="medium"></IonIcon> */}
+      <span class="material-symbols-outlined">delete</span>
       </div>
     </div>
   );

@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { resetError } from "@/app/redux/slice";
 const InputError = (props) => {
   const dispatch = useDispatch();
+  // const message = "Success";
+  // const sign = "positive";
   const message = useSelector((state) => state.languages.errorMessage);
   const sign = useSelector((state) => state.languages.errorSign);
   let active = message !== "";
@@ -20,7 +22,7 @@ const InputError = (props) => {
     <div className={`${styles["parent-div"]} ${active? styles.active: ""}`}>
       <div className={styles["logo"]}>
         {sign == "negative" && <span className={`material-symbols-outlined`} style={{ fontSize: '40px', color: "red" }}>close</span>}
-        {sign == "positive" && <span className={`material-symbols-outlined`} style={{ fontSize: '40px', color: "green"}}>done</span>}
+        {sign == "positive" && <span class="material-symbols-outlined" style={{ fontSize: '40px', color: "black" }}>check</span>}
         
       </div>
       <div className={styles.message}>{message}</div>

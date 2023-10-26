@@ -1,6 +1,13 @@
 .container{
-    background-color: white;
     width: 90%;
-    background-color: red;
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    padding: 0;
+}
+
+.container::-webkit-scrollbar{
+    display: none;
 }

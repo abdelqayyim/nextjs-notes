@@ -1,20 +1,40 @@
-import React from 'react'; 
+import React, {useEffect, useState, useRef} from 'react'; 
 import styles from "./NoteDetail.module.css"
 import Text from './Text';
+import IMG from './IMG';
+import { useSelector } from 'react-redux';
 
 const NoteDetail = (props) => {
     const notes = props.notes //array
-    console.log(notes);
+    const container = useRef();
+    const currentNotes = useSelector((state) => state.languages.currentNote.noteDetail);
+    const [initialLoad, setInitialLoad] = useState(true);
+
+    if (typeof notes[0] == 'string') {
+        return <Text text={notes[0]}/>
+    }
+
+    useEffect(() => {
+        if (!initialLoad) { //we will get here only after the first load, now we can scroll the container to the added element
+            container.current.scrollTop = container.current.scrollHeight;
+          } else {
+            // Mark the initial load as complete after the initial render.
+            setInitialLoad(false);
+          }
+     },[currentNotes])
+
+    
+
     
     return (
-        <div className={styles.container}>{notes.map((detail) => {
-            if (Object.keys(detail) == 'text') {
-                return <Text text={detail.text}/>
+        <div ref={ container} className={styles.container}>
+            {notes.map((detail) =>
+                {
+                    if (Object.keys(detail) == 'text') {return <Text text={detail.text}/>}
+                    if (Object.keys(detail) == 'img') { return <IMG img={detail.img} /> }
+                })
             }
-            if (notes.length == 1) {
-                return <Text text={notes[0]}/>
-            }
-        })}</div>
+        </div>
     )
 };
 

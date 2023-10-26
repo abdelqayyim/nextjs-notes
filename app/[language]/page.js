@@ -11,6 +11,7 @@ import Message from "../components/message-popup/Message";
 
 
 const page = (props) => {
+
     const dispatch = useDispatch();
     const languages = useSelector((state) => state.languages.value);
     let loadingState = useSelector((state) => state.languages.loading);
@@ -32,14 +33,14 @@ const page = (props) => {
         }
     }
     
-    let langObject = languages.filter((language) => language._id == curr);
-    
     let notes = []
-    langObject.map((obj) => {
-        obj.notes.map((note) => {
-            notes.push(note)
-        })
-    })
+    let langObject = languages.filter((language) => {
+        if (language._id == curr) {
+            notes = language.notes;
+            return language;
+        }
+    });
+    
 
     if (loadingState == LOADING_STATE.LOADING) {
         return <Message message={"Loading Notes"} />;
@@ -47,7 +48,7 @@ const page = (props) => {
 
     return (
         <div className={styles["notes-div-child"]}>
-            {notes.map((note) => <Note detail={note.noteDetail} title={note.title} description={note.description} id={note._id} />)}
+            {notes != undefined && notes.map((note) => <Note detail={note.noteDetail} title={note.title} description={note.description} id={note._id} />)}
         </div>
     )
 };

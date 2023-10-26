@@ -8,7 +8,6 @@ import { javascript } from '@codemirror/lang-javascript';
 
 
 const Text = (props) => {
-    console.log(props.text);
     const textArea = useRef();
     useEffect(() => {
         if (textArea.current) {
@@ -25,7 +24,7 @@ const Text = (props) => {
     return (
         // <SyntaxHighlighter ref={textArea } children={props.text} language='csharp' style={lucario}/>
 
-        <CodeMirror value={props.text} extensions={[javascript({ jsx: true })]}/>
+        <CodeMirror className={styles.textArea} value={props.text} extensions={[javascript({ jsx: true })]}/>
     )
 };
 

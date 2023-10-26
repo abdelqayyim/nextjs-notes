@@ -7,9 +7,9 @@ import DropArrow from "../DropArrow/DropArrow";
 // import { AppProvider, ACTIONS } from "../../app/AppContext";
 import AddNoteBtn from "../note/AddNoteBtn";
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchLanguages, setCurrentLanguage, togglePopup } from "../../redux/slice";
+import { fetchLanguages, setCurrentLanguage, togglePopup,viewingNotes } from "../../redux/slice";
 import { LOADING_STATE } from "../../redux/slice";
-import AddLanguagePopUp from "../PopUps/AddLanguagePopUp";
+import InputPopUp from "../PopUps/InputPopUp";
 
 const LanguagesBox = (props) => {
   let state = useSelector((state) => state.languages);
@@ -37,6 +37,7 @@ const LanguagesBox = (props) => {
 
   const languageButtonHandler = (id) => {
     dispatch(setCurrentLanguage(id));
+    dispatch(viewingNotes(true));
   }
 
   const changeMode = (newMode) => {
@@ -60,7 +61,7 @@ const LanguagesBox = (props) => {
           })}
           {loadingState == LOADING_STATE.IDLE && <DropArrow mode={changeMode} />}
         </div>
-        {popupActive && <AddLanguagePopUp mode={ mode} />}
+        {popupActive && <InputPopUp mode={ mode} />}
       </div>
     );
   }
