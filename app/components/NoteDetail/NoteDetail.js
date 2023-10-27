@@ -10,9 +10,6 @@ const NoteDetail = (props) => {
     const currentNotes = useSelector((state) => state.languages.currentNote.noteDetail);
     const [initialLoad, setInitialLoad] = useState(true);
 
-    if (typeof notes[0] == 'string') {
-        return <Text text={notes[0]}/>
-    }
 
     useEffect(() => {
         if (!initialLoad) { //we will get here only after the first load, now we can scroll the container to the added element
@@ -21,16 +18,22 @@ const NoteDetail = (props) => {
             // Mark the initial load as complete after the initial render.
             setInitialLoad(false);
           }
-     },[currentNotes])
-
+    }, [currentNotes])
     
+    const saveHandler = () => {
+        console.log("SHOULD SAVE");
+    }
+
+    if (typeof notes[0] == 'string') {
+        return <Text save={ saveHandler} text={notes[0]}/>
+    }
 
     
     return (
         <div ref={ container} className={styles.container}>
             {notes.map((detail) =>
                 {
-                    if (Object.keys(detail) == 'text') {return <Text text={detail.text}/>}
+                if (Object.keys(detail) == 'text') { return <Text save={ saveHandler} text={detail.text}/>}
                     if (Object.keys(detail) == 'img') { return <IMG img={detail.img} /> }
                 })
             }

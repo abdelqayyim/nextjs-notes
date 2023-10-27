@@ -25,12 +25,12 @@
     color: white;
     border-bottom: 1px solid white;
 }
-.extras-div > div{
+.extras-div > div, .extras-div > label{
     box-sizing: border-box;
     margin-right: 10px;
     padding: 5px;
 }
-.extras-div > div:hover{
+.extras-div > div:hover,  .extras-div > label:hover{
     cursor: pointer;
     background-color:#0a84ee;
     border-radius:5px;
@@ -53,5 +53,9 @@
     margin-top: 10px;
 }
 .notes-div-child::-webkit-scrollbar{
+    display: none;
+  }
+  .img{
+    background-color:red;
     display: none;
   }

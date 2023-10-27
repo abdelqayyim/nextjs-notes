@@ -5,7 +5,7 @@ import styles from "./Note.module.css";
 // import { trashOutline } from 'ionicons/icons';
 import { useRouter, usePathname } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentNote, toggleTakingNote } from "@/app/redux/slice";
+import { setCurrentNote, toggleTakingNote, deleteNote, fetchLanguages } from "@/app/redux/slice";
 
 const Note = (props) => {
   const state = useSelector((state) => state.languages);
@@ -13,13 +13,15 @@ const Note = (props) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const deleteNoteHandler = ()=>{
-    console.log("pressed");
+  const deleteNoteHandler = (event) => {
+    event.stopPropagation();
+    let note = { _id: props.id, title: props.title, description: props.description, noteDetail: props.detail };
+    dispatch(deleteNote(note));
   }
   // const curr = useContext(AppProvider);
   const noteHandler = () => {
     // set the current note in the global context
-    let note = { noteID: props.id, noteTitle: props.title, noteDescription: props.description, noteDetail: props.detail };
+    let note = { _id: props.id, title: props.title, description: props.description, noteDetail: props.detail };
     dispatch(setCurrentNote(note));
     router.push(`${pathname}/${props.id}`);
   };

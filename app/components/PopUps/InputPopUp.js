@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { togglePopup } from "../../redux/slice";
 // import { IonIcon } from '@ionic/react';
 // import { closeOutline } from 'ionicons/icons';
-import {addLanguage,deleteLanguage} from "../../redux/slice";
+import {addLanguage,deleteLanguage, addNote, fetchLanguages} from "../../redux/slice";
 
 const AddLanguagePopUp = (props) => {
   // used in languagesBox component
@@ -13,8 +13,10 @@ const AddLanguagePopUp = (props) => {
   const [inputValue, setInputValue] = useState("");
   const [titleValue, setTitleValue] = useState("");
   const [descriptionValue, setDescriptionValue] = useState("");
+
   const overlay = useRef();
   const dispatch = useDispatch();
+  
 
   const overlayClickHandler = () => {
     dispatch(togglePopup());
@@ -28,7 +30,17 @@ const AddLanguagePopUp = (props) => {
     dispatch(togglePopup());
   }
   const addNoteHandler = () => {
-    console.log(descriptionValue);
+    let note = {
+      title: titleValue,
+      description: descriptionValue,
+      noteDetail: "",
+      _id: ""
+    }
+    dispatch(addNote(note));
+    // setTimeout(() => { 
+    //   dispatch(fetchLanguages());
+    // },1000)
+    dispatch(togglePopup());
   }
   return ReactDOM.createPortal(
     <div ref={overlay} className={styles.overlay} onClick={(event)=>{if (overlay.current == event.target) {
