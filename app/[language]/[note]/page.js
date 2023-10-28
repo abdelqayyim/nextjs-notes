@@ -8,7 +8,7 @@ import Text from '../../components/NoteDetail/Text';
 import IMG from '../../components/NoteDetail/IMG';
 import { useRouter, usePathname } from 'next/navigation';
 
-const pa = (props) => {
+const Page = (props) => {
     //TODO: the state cannot be imported for some reason
     const router = useRouter();
     const state = useSelector(state => state.languages);
@@ -58,12 +58,6 @@ const pa = (props) => {
         dispatch(saveNote([title, description]));
     }
     
-    useEffect(() => {
-        if (title.current) {
-            title.current.addEventListener("input", ()=>console.log("CHANGING"))
-        }
-     },[])
-    
     const changeTitle = () => {
         setTitle(titleRef.current.value);
     }
@@ -103,5 +97,5 @@ const pa = (props) => {
     )
 };
 
-export default pa;
+export default Page;
 

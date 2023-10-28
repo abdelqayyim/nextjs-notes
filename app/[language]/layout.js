@@ -10,7 +10,7 @@ import { togglePopup } from '../redux/slice';
 import { addText,addImage } from '../redux/slice';
 
 
-const layout = ({ children }) => {
+const Layout = ({ children }) => {
     const file = useRef();
     const dispatch = useDispatch();
     const isUserTakingNote = useSelector((state) => state.languages.takingNote);
@@ -27,4 +27,4 @@ const layout = ({ children }) => {
     )
 };
 
-export default layout;
+export default Layout;

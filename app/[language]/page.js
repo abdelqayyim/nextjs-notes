@@ -13,7 +13,7 @@ import {
 import { LOADING_STATE } from "../redux/slice";
 import Spinner from "../components/Spinner/Spinner";
 
-const page = (props) => {
+const Page = (props) => {
   const dispatch = useDispatch();
   const languages = useSelector((state) => state.languages.value);
   let loadingState = useSelector((state) => state.languages.loading);
@@ -66,6 +66,7 @@ const page = (props) => {
                   title={note.title}
                   description={note.description}
                   id={note._id}
+                  key={note._id}
                 />
               ))}
           </div>
@@ -74,4 +75,4 @@ const page = (props) => {
     </div>
   );
 };
-export default page;
+export default Page;

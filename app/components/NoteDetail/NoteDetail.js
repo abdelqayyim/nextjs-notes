@@ -56,12 +56,12 @@ const NoteDetail = (props) => {
           {notes.map((note, index) => {
         if (Object.keys(note).includes('text')) {
           return (
-            <Text delete={deleteNoteHandler} save={updateNoteHandler} index={index} text={notes[index].text} move={moveHandler} />
+            <Text key={index} delete={deleteNoteHandler} save={updateNoteHandler} index={index} text={notes[index].text} move={moveHandler} />
           );
         }
         if (Object.keys(note).includes('img')) {
           return (
-              <IMG img={notes[index].img} delete={deleteNoteHandler} index={index} move={moveHandler}/>
+              <IMG key={index} img={notes[index].img} delete={deleteNoteHandler} index={index} move={moveHandler}/>
           );
         }
       })}

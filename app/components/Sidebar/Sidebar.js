@@ -27,9 +27,9 @@ const Sidebar = (props) => {
         </div>
             </div>
             <ul className={styles.list}>
-                {languages.length > 0 && languages.map((language)=>{
+                {languages.length > 0 && languages.map((language, index)=>{
                     return (
-                        <Link className={styles.link} href={`/${language.name.replace(/\s/g, "")}`}>
+                        <Link key={index} className={styles.link} href={`/${language.name.replace(/\s/g, "")}`}>
                             <li onClick={()=>languageOnClick(language._id)} key={language._id} className={`${styles["list-item"]} ${language._id == currentLanguageID? styles.active: ""}`}>{ language.name}</li>
                         </Link>
                     )
