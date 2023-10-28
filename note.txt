@@ -1,0 +1,4 @@
+For next time:
+    1 - Add a move up and delete for images 
+    2 - make text unclickable unless edit button is pressed 
+    3 - size image properly, as of right now it is too big

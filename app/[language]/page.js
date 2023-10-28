@@ -40,6 +40,9 @@ const page = (props) => {
             return language;
         }
     });
+    const addNoteHandler = () => {
+        dispatch(togglePopup());
+    }
     
 
     if (loadingState == LOADING_STATE.LOADING) {
@@ -47,9 +50,23 @@ const page = (props) => {
     }
 
     return (
-        <div className={styles["notes-div-child"]}>
-            {notes != undefined && notes.map((note) => <Note detail={note.noteDetail} title={note.title} description={note.description} id={note._id} />)}
+        <div className={styles["main-div"]}>
+                <div className={styles["detail-div"]}>
+                    INfo
+                </div>
+                <div className={styles["extras-div"]}>
+                <div onClick={addNoteHandler}>Add Note</div>
+
+                </div>
+                <div className={styles["notes-div-parent"]}>
+                    <div className={styles["notes-div-child"]}>
+                    <div className={styles["notes-div-child"]}>
+                        {notes != undefined && notes.map((note) => <Note detail={note.noteDetail} title={note.title} description={note.description} id={note._id} />)}
         </div>
+                    </div>
+                </div>
+            </div>
+        
     )
 };
 export default page;

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-const URL = "http://localhost:8000/languages/";
-// const URL = "https://fair-teal-gharial-coat.cyclic.app/languages/";
+// const URL = "http://localhost:8000/languages/";
+const URL = "https://fair-teal-gharial-coat.cyclic.app/languages/";
 export const LOADING_STATE = { IDLE: "idle", LOADING: "laoding", SUCCEEDED: "succeeded", FAILED: "failed" };
 
 //NOTE: with normal redux, unable to make async calls so will use middledware reduc-thunk
@@ -11,7 +11,8 @@ export const appSlice = createSlice({
     initialState: {
         value: [],
         currentLanguageID: "",
-        currentNote: {noteID: null, noteTitle: null, noteDescription: null,noteDetail: null},
+        currentNote: { _id: null, title: null, description: null, noteDetail: null },
+        currentNotes: [],
         loading: LOADING_STATE.IDLE,
         errorMessage: "",
         errorSign: "",
@@ -21,7 +22,7 @@ export const appSlice = createSlice({
   },
     reducers: {
         setCurrentLanguage: (state, action) => {
-            state.currentLanguageID = action.payload
+            state.currentLanguageID = action.payload;
         }, 
         setCurrentNote: (state, action) => {
             state.currentNote = action.payload
@@ -46,7 +47,17 @@ export const appSlice = createSlice({
         },
         addImage: (state, action) => {
             state.currentNote.noteDetail = [...state.currentNote.noteDetail, { img: action.payload }];
-        }
+        },
+        updateNote: (state, action) => {
+            let noteObject = { 
+                title: state.currentNote.title,
+                description: state.currentNote.description,
+                noteDetail: [...action.payload],
+                _id: state.currentNote._id
+            }
+            state.currentNote = noteObject;
+        },
+        
         
     },
     extraReducers: (builder) => {
@@ -57,6 +68,11 @@ export const appSlice = createSlice({
         .addCase(fetchLanguages.fulfilled, (state, action) => {
             state.loading = LOADING_STATE.SUCCEEDED;
             state.value = action.payload;
+            state.currentNotes = action.payload.map((lang) => {
+                if (lang._id == state.currentLanguageID) {
+                    return lang.notes;
+                }
+            })
             state.loading = LOADING_STATE.IDLE;
       })
       .addCase(fetchLanguages.rejected, (state, action) => {
@@ -134,9 +150,27 @@ export const appSlice = createSlice({
             })
             .addCase(getNotes.fulfilled, (state, action) => {
                 state.loading = LOADING_STATE.SUCCEEDED;
-                setTimeout(()=>{state.loading = LOADING_STATE.IDLE;},500)
+                state.currentNotes = action.payload;
+                console.log(action);
+                state.loading = LOADING_STATE.IDLE;
             })
             .addCase(getNotes.rejected, (state, action) => {
+                state.loading = LOADING_STATE.FAILED;
+                state.errorMessage = action.error.message;
+                state.errorSign = "negative";
+                state.loading = LOADING_STATE.IDLE;
+            })
+        .addCase(saveNote.pending,(state)=> {
+                state.loading = LOADING_STATE.LOADING;
+            })
+            .addCase(saveNote.fulfilled, (state, action) => {
+                state.loading = LOADING_STATE.SUCCEEDED;
+                state.errorMessage = "Note Successfully Saved";
+                state.errorSign = "positive";
+                state.currentNote = action.payload;
+                state.loading = LOADING_STATE.IDLE;
+            })
+            .addCase(saveNote.rejected, (state, action) => {
                 state.loading = LOADING_STATE.FAILED;
                 state.errorMessage = action.error.message;
                 state.errorSign = "negative";
@@ -243,17 +277,51 @@ const deleteNote = createAsyncThunk( //receives only the note
 const getNotes = createAsyncThunk( //receives only the note
     'languages/getNotes',
     async (_, { getState }) => {
-        const currentLanguageID = state.languages.currentLanguageID;
+        console.log("CALLED---");
+        const currentLanguageID = getState().languages.currentLanguageID;
         try {
             //check to see if title already exists
             const response = await fetch(URL +`${currentLanguageID}/getNotes`, {
-                method: 'DELETE',
+                method: 'GET',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
             })
-            console.log(response);
+            const data = await response.json();
+            return data;
+        }
+        catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+)
+const saveNote = createAsyncThunk( //receives only the note
+    'languages/updateNote',
+    async (arr, { getState, dispatch }) => {
+        const currentLanguageID = getState().languages.currentLanguageID;
+        const temp = getState().languages.currentNote;
+        let n = {
+            ...temp,
+            title: arr[0],
+            description: arr[1]
+        }
+
+        // n.title = arr[0];
+        // n.description = arr[1];
+        console.log(n);
+        try {
+            //check to see if title already exists
+            const response = await fetch(URL +`${currentLanguageID}/updateNote`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(n)
+            })
+            return n;
         }
         catch (error) {
             console.log(error);
@@ -291,6 +359,6 @@ const deleteLanguage = createAsyncThunk(
 
 
 // Action creators are generated for each case reducer function
-export { fetchLanguages, addLanguage,deleteLanguage, addNote,deleteNote, getNotes };
-export const { setCurrentLanguage, togglePopup, resetError, setCurrentNote,takingNote, addText,viewingNotes,addImage } = appSlice.actions;
+export { fetchLanguages, addLanguage,deleteLanguage, addNote,deleteNote, getNotes, saveNote };
+export const { setCurrentLanguage, togglePopup, resetError, setCurrentNote,takingNote, addText,viewingNotes,addImage,updateNote, getCurrentNote } = appSlice.actions;
 export default appSlice.reducer;

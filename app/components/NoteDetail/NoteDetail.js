@@ -1,44 +1,65 @@
-import React, {useEffect, useState, useRef} from 'react'; 
-import styles from "./NoteDetail.module.css"
+import React, { useEffect, useState, useRef } from 'react';
+import styles from './NoteDetail.module.css';
 import Text from './Text';
 import IMG from './IMG';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateNote } from '@/app/redux/slice';
 
 const NoteDetail = (props) => {
-    const notes = props.notes //array
+    
+    const dispatch = useDispatch();
     const container = useRef();
-    const currentNotes = useSelector((state) => state.languages.currentNote.noteDetail);
+    const globalNotes = useSelector((state) => state.languages.currentNote.noteDetail);
     const [initialLoad, setInitialLoad] = useState(true);
-
-
-    useEffect(() => {
-        if (!initialLoad) { //we will get here only after the first load, now we can scroll the container to the added element
-            container.current.scrollTop = container.current.scrollHeight;
-          } else {
-            // Mark the initial load as complete after the initial render.
-            setInitialLoad(false);
-          }
-    }, [currentNotes])
     
-    const saveHandler = () => {
-        console.log("SHOULD SAVE");
-    }
-
-    if (typeof notes[0] == 'string') {
-        return <Text save={ saveHandler} text={notes[0]}/>
-    }
-
+    const [notes, setNotes] = useState([]);
     
-    return (
-        <div ref={ container} className={styles.container}>
-            {notes.map((detail) =>
-                {
-                if (Object.keys(detail) == 'text') { return <Text save={ saveHandler} text={detail.text}/>}
-                    if (Object.keys(detail) == 'img') { return <IMG img={detail.img} /> }
-                })
-            }
-        </div>
-    )
+    
+    useEffect(() => { setNotes(prev => globalNotes); }, [globalNotes]);
+    console.log(notes.length);
+
+    const moveHandler = (index) => {
+    //     console.log(...notes);
+    let temp = [...notes];
+    let t = temp[index - 1];
+    temp[index - 1] = temp[index];
+        temp[index] = t;
+        setNotes(prev => temp);
+        dispatch(updateNote(temp));
+  };
+  const updateNoteHandler = (index, value) => {
+    const temp = [...notes];
+      temp[index] = value;
+      setNotes(prev => temp);
+      dispatch(updateNote(temp));
+    };
+
+  useEffect(() => {
+    if (!initialLoad) {
+      container.current.scrollTop = container.current.scrollHeight;
+    } else {
+      setInitialLoad(false);
+    }
+  }, []);
+    
+
+  return (
+    <div ref={container} className={styles.container}>
+          {notes.map((note, index) => {
+          console.log(notes);
+        if (Object.keys(note).includes('text')) {
+          return (
+            <Text save={updateNoteHandler} index={index} text={notes[index].text} move={moveHandler} />
+          );
+        }
+        if (Object.keys(note).includes('img')) {
+          return (
+              <IMG img={ notes[index].img} />
+          );
+        }
+      })}
+    </div>
+  );
 };
 
 export default NoteDetail;

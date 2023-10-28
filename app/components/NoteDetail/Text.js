@@ -1,37 +1,71 @@
 import React, {useRef, useEffect, useState} from 'react'; 
 import styles from "./Text.module.css"
-// import SyntaxHighlighter from "react-syntax-highlighter";
-// import { lucario } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import CodeMirror from '@uiw/react-codemirror';
-import { StreamLanguage } from '@codemirror/language';
-import { javascript } from '@codemirror/lang-javascript';
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 
 const Text = (props) => {
+    const parent = useRef();
     const textArea = useRef();
-    const [textValue, setTextValue] = useState(props.text);
-    // useEffect(() => {
-    //     if (textArea.current) {
-    //       textArea.current.style.height = 'auto';
-    //       textArea.current.style.height = textArea.current.scrollHeight + 'px';
-    //     }
-    // }, [props.text]);
-    const saveHandler = () => {
-        // setTextValue(textArea.current.editor.innerText);
-        let index = textArea.current.editor.innerText.indexOf("\n");
-        console.log(textArea.current.editor.innerText.substring(index + 1));
-        console.log(props.save());
+    const highlighter = useRef();
+    const [textValue, setTextValue] = useState("");
+    const [editing, setEditing] = useState(false);
+
+    useEffect(() => { setTextValue(props.text) }, [props.text]);
+
+    const updateTextHandler = (event,newText) => {
+        props.save(props.index, {text: newText});
+        setTextValue(prev => newText);
+        setHeightHandler(event.target);
     }
+    const setHeightHandler = (target) => {
+        target.addEventListener('input', function () {
+            this.style.height = 'auto';  /* Reset height to auto */
+            this.style.height = this.scrollHeight +10 + 'px';  /* Set height based on content */
+          });
+    }
+    useEffect(() => {
+        if (editing) {
+            // setHeightHandler(textArea.current);
+            textArea.current.style.height = 'auto';  /* Reset height to auto */
+            textArea.current.style.height = textArea.current.scrollHeight +10 + 'px';  /* Set height based on content */
+        }
+        else {
+            //TODO: set cursor pointer on syntaxhighlighter
+            // highlighter.current.style.pointerEvents = 'none';
+            
+        }
+        
+    }, [editing, textValue])
+    
+    const moveHandler = (event) => {
+        event.preventDefault();
+        props.move(props.index);
+    }
+    const toggleEdit = (event) => {
+        event.preventDefault();
+        setEditing(prev=>!prev);
+    }
+    
 
-
-//TODO: fix the editor, then fix save note 
-
-    // extensions={[javascript({ jsx: true })]}
-    return (
-        // <SyntaxHighlighter ref={textArea } children={props.text} language='csharp' style={lucario}/>
-
-        <CodeMirror options={{lineNumbers: false}} ref={textArea} onChange={saveHandler} className={styles.textArea} value={textValue} extensions={[javascript({ jsx: true })]}/>
-    )
+return (
+    <div ref={parent} className={styles.parent}>
+        
+            <div className={styles.extras}>
+            <div onMouseDown={toggleEdit}>{editing == false?<span class="material-symbols-outlined">edit</span>:<span class="material-symbols-outlined">
+check_box
+</span> }</div>
+                {props.index != 0 && <div onMouseDown={moveHandler}><span class="material-symbols-outlined">expand_less</span></div>}
+            <div><span class="material-symbols-outlined">delete_forever</span></div>
+        </div>
+        
+         {editing== true && <textArea onClick={(event)=>setHeightHandler(event.target)} ref={textArea} wrap="off" className={`${styles.textArea} ${textValue.includes(`"`)|| textValue.includes("`")?styles.quote: ""}`}  value={textValue} onChange={(event)=>updateTextHandler(event,event.target.value)}>{textValue}</textArea>}   
+        
+        {editing == false && <SyntaxHighlighter ref={highlighter} style={docco} showLineNumbers={true} className={styles.highlighter} language="javascript">
+            {textValue}
+        </SyntaxHighlighter>}
+    </div>
+  );
 };
 
 export default Text;

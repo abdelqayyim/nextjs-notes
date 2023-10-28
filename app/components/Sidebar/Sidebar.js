@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import styles from './Sidebar.module.css';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentLanguage, viewingNotes } from '@/app/redux/slice';
+import { setCurrentLanguage, fetchLanguages } from '@/app/redux/slice';
 
 import InputPopUp from '../PopUps/InputPopUp';
 
@@ -14,7 +14,7 @@ const Sidebar = (props) => {
 
     const languageOnClick = (id) => {
         dispatch(setCurrentLanguage(id));
-        dispatch(viewingNotes(true));
+        dispatch(fetchLanguages());
     }
 
     return (
