@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import styles from "./Message.module.css";
+import styles from "./Spinner.module.css";
 // import * as SVGLoaders from "svg-loaders-react";
 import { Orbit } from '@uiball/loaders';
 

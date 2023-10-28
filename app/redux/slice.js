@@ -87,10 +87,11 @@ export const appSlice = createSlice({
             .addCase(addLanguage.fulfilled, (state, action) => {
                 state.loading = LOADING_STATE.SUCCEEDED;
                 state.value = [...state.value, {_id:"",name:action.meta.arg, note:[]}];
-                console.log(state.value);
                 state.errorMessage = "Language Successfully Added";
                 state.errorSign = "positive";
-                state.loading = LOADING_STATE.IDLE;
+                setTimeout(() => {
+                    state.loading = LOADING_STATE.IDLE;
+                }, 4000);
             })
             .addCase(addLanguage.rejected, (state, action) => {
                 state.loading = LOADING_STATE.FAILED;
@@ -253,8 +254,7 @@ const addNote = createAsyncThunk( //receives only the note
 const deleteNote = createAsyncThunk( //receives only the note
     'languages/deleteNote',
     async (note, { getState, dispatch }) => {
-        const state = getState();
-        const currentLanguageID = state.languages.currentLanguageID;
+        const currentLanguageID = getState().languages.currentLanguageID;
         try {
             //check to see if title already exists
             const response = await fetch(URL +`${currentLanguageID}/deleteNote`, {
@@ -265,7 +265,6 @@ const deleteNote = createAsyncThunk( //receives only the note
                 },
                 body:JSON.stringify(note),
             })
-            console.log(response);
             dispatch(fetchLanguages());
         }
         catch (error) {
@@ -307,10 +306,6 @@ const saveNote = createAsyncThunk( //receives only the note
             title: arr[0],
             description: arr[1]
         }
-
-        // n.title = arr[0];
-        // n.description = arr[1];
-        console.log(n);
         try {
             //check to see if title already exists
             const response = await fetch(URL +`${currentLanguageID}/updateNote`, {
@@ -335,11 +330,14 @@ const deleteLanguage = createAsyncThunk(
     async (language, { getState }) => {
         const state = getState();
         const languages = state.languages.value;
+        const l = state.languages.value.filter(lang => {
+            return lang.name == language
+        });
         try {
             if (!languageExists(language, languages)) {
                 throw new Error("Language Does not Exists"); 
             }
-            const response = await fetch(URL + `${language.toLowerCase()}`, {
+            const response = await fetch(URL + `${l[0]._id}`, {
                 method: 'DELETE',
                 headers: {
                     'Accept': 'application/json',

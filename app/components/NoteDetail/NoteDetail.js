@@ -16,8 +16,15 @@ const NoteDetail = (props) => {
     
     
     useEffect(() => { setNotes(prev => globalNotes); }, [globalNotes]);
-    console.log(notes.length);
 
+    const deleteNoteHandler = (index) => {
+        let temp = [...notes];
+        console.log(temp);
+        temp.splice(index, 1);
+        setNotes(prev => temp);
+        dispatch(updateNote(temp));
+
+    }
     const moveHandler = (index) => {
     //     console.log(...notes);
     let temp = [...notes];
@@ -42,19 +49,19 @@ const NoteDetail = (props) => {
     }
   }, []);
     
+    
 
   return (
     <div ref={container} className={styles.container}>
           {notes.map((note, index) => {
-          console.log(notes);
         if (Object.keys(note).includes('text')) {
           return (
-            <Text save={updateNoteHandler} index={index} text={notes[index].text} move={moveHandler} />
+            <Text delete={deleteNoteHandler} save={updateNoteHandler} index={index} text={notes[index].text} move={moveHandler} />
           );
         }
         if (Object.keys(note).includes('img')) {
           return (
-              <IMG img={ notes[index].img} />
+              <IMG img={notes[index].img} delete={deleteNoteHandler} index={index} move={moveHandler}/>
           );
         }
       })}

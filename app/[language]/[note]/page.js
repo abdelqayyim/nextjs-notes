@@ -3,16 +3,21 @@ import styles from './page.module.css';
 import React, {useRef, useState, useEffect} from 'react'; 
 import { useSelector, useDispatch } from 'react-redux';
 import NoteDetail from '@/app/components/NoteDetail/NoteDetail';
-import { saveNote, fetchLanguages, getCurrentNote, addImage } from '@/app/redux/slice';
+import { saveNote, addText, addImage, deleteNote, fetchLanguages } from '@/app/redux/slice';
 import Text from '../../components/NoteDetail/Text';
 import IMG from '../../components/NoteDetail/IMG';
+import { useRouter, usePathname } from 'next/navigation';
 
 const pa = (props) => {
     //TODO: the state cannot be imported for some reason
-    const currentNote = useSelector((state) => state.languages.currentNote);
-    const currentNotes = useSelector((state) => state.languages.currentNote.noteDetail);
+    const router = useRouter();
+    const state = useSelector(state => state.languages);
+    const currentNote = state.currentNote;
+    const currentNotes = state.currentNote.noteDetail;
+    const currentNoteID = state.currentNote._id;
+    const currentLanguage = state.currentLanguageID;
     const [newNotes, setNewNotes] = useState(currentNotes);//this is what will be sent to save the note
-    // const [displayNotes, setDisplayNotes] = useState([]);
+    const pathname = usePathname();
     const file = useRef();
     const dispatch = useDispatch();
     const [title, setTitle] = useState(currentNote.title);
@@ -21,8 +26,7 @@ const pa = (props) => {
     const descriptionRef = useRef();
 
     const addTextHandler = () => {
-        // dispatch(addText());
-        setNewNotes([...newNotes, { text: "Here" }]);
+        dispatch(addText());
     }
 
     const addImageHandler = () => {
@@ -41,16 +45,16 @@ const pa = (props) => {
     }
     
     const deleteNoteHandler = () => {
-        console.log(currentNote);
+        let note = { _id: currentNoteID, title:title, description: description, noteDetail: currentNotes };
+        dispatch(deleteNote(note));
+        const name = pathname.split('/')[1];
+        console.log(name);
+        router.push(`/${name}`)
     }
     const saveNoteHandler = () => {
         dispatch(saveNote([title, description]));
     }
     
-    if (typeof newNotes[0] == 'string') {
-        return <Text save={ saveHandler} text={notes[0]}/>
-    }
-
     useEffect(() => {
         if (title.current) {
             title.current.addEventListener("input", ()=>console.log("CHANGING"))

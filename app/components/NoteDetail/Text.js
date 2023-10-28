@@ -42,6 +42,10 @@ const Text = (props) => {
         event.preventDefault();
         props.move(props.index);
     }
+    const deleteHandler = (event) => {
+        event.preventDefault();
+        props.delete(props.index);
+    }
     const toggleEdit = (event) => {
         event.preventDefault();
         setEditing(prev=>!prev);
@@ -56,7 +60,7 @@ return (
 check_box
 </span> }</div>
                 {props.index != 0 && <div onMouseDown={moveHandler}><span class="material-symbols-outlined">expand_less</span></div>}
-            <div><span class="material-symbols-outlined">delete_forever</span></div>
+            <div onMouseDown={deleteHandler}><span class="material-symbols-outlined">delete_forever</span></div>
         </div>
         
          {editing== true && <textArea onClick={(event)=>setHeightHandler(event.target)} ref={textArea} wrap="off" className={`${styles.textArea} ${textValue.includes(`"`)|| textValue.includes("`")?styles.quote: ""}`}  value={textValue} onChange={(event)=>updateTextHandler(event,event.target.value)}>{textValue}</textArea>}   

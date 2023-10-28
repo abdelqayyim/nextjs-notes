@@ -1,11 +1,8 @@
 "use client"
 import React, { useEffect, useContext, useState } from "react";
 import styles from "./LanguagesBox.module.css";
-
 import LanguageButton from "../button/LanguageButton";
 import DropArrow from "../DropArrow/DropArrow";
-// import { AppProvider, ACTIONS } from "../../app/AppContext";
-import AddNoteBtn from "../note/AddNoteBtn";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchLanguages, setCurrentLanguage, togglePopup,viewingNotes } from "../../redux/slice";
 import { LOADING_STATE } from "../../redux/slice";
@@ -27,7 +24,6 @@ const LanguagesBox = (props) => {
   const languages = useSelector((state) => state.languages.value);
 
   function titleCase(str) {
-    
     str = str.toLowerCase().split(" ");
     for (var i = 0; i < str.length; i++) {
       str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);

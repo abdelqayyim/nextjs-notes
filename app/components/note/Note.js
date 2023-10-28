@@ -31,7 +31,7 @@ const Note = (props) => {
       <div className={styles["note-title"]}><span className={styles["custom-bullet"]}></span>{props.title}</div>
       <div className={styles["note-description"]}>{props.description}</div>
       <div className={styles.delete} onClick={deleteNoteHandler}>
-      <span class="material-symbols-outlined">delete</span>
+        <span class="material-symbols-outlined">delete</span>
       </div>
     </div>
   );

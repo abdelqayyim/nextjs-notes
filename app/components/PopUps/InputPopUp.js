@@ -22,7 +22,7 @@ const AddLanguagePopUp = (props) => {
     dispatch(togglePopup());
   }
   const submitHandler = (event) => {
-    if (props.mode == "Add") {
+    if (props.mode == "add") {
       dispatch(addLanguage(inputValue)); 
     } else {
       dispatch(deleteLanguage(inputValue));
@@ -47,7 +47,7 @@ const AddLanguagePopUp = (props) => {
       overlayClickHandler();
     }
     }}>
-      {(props.mode == 'add' || props.mode == 'delete') &&
+      {(props.mode == 'Add' || props.mode == 'Delete') &&
         <div className={styles.popup}>
         <label for="input">{ props.mode} Language</label>
         <input onChange={(event) =>setInputValue(event.target.value)} className={styles.input} type="text" id="input" name="userInput" value={inputValue} />
