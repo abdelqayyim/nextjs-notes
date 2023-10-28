@@ -9,6 +9,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    background-color: rgb(34,34,34);
 }
 .detail-div{
     height: 70px;
@@ -22,7 +23,7 @@
     padding-left: 10px;
     font-size: 18px;
     font-weight: bold;
-    color: white;
+    color: rgb(39,121,167);
     border-bottom: 1px solid white;
 }
 .extras-div > div, .extras-div > label{
@@ -32,7 +33,8 @@
 }
 .extras-div > div:hover,  .extras-div > label:hover{
     cursor: pointer;
-    background-color:#0a84ee;
+    background-color:rgb(16,16,16);
+    color: white;
     border-radius:5px;
 }
 .notes-div-parent{

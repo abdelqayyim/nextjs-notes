@@ -15,15 +15,20 @@ const pa = (props) => {
     const currentNote = state.currentNote;
     const currentNotes = state.currentNote.noteDetail;
     const currentNoteID = state.currentNote._id;
-    const currentLanguage = state.currentLanguageID;
     const [newNotes, setNewNotes] = useState(currentNotes);//this is what will be sent to save the note
-    const pathname = usePathname();
+    const langName = usePathname().split('/')[1];
     const file = useRef();
     const dispatch = useDispatch();
     const [title, setTitle] = useState(currentNote.title);
     const [description, setDescription] = useState(currentNote.description);
     const titleRef = useRef();
     const descriptionRef = useRef();
+
+    if (title == null) {
+        console.log(langName);
+        router.push(`/${langName}`);
+        return;
+    }
 
     const addTextHandler = () => {
         dispatch(addText());
@@ -47,9 +52,7 @@ const pa = (props) => {
     const deleteNoteHandler = () => {
         let note = { _id: currentNoteID, title:title, description: description, noteDetail: currentNotes };
         dispatch(deleteNote(note));
-        const name = pathname.split('/')[1];
-        console.log(name);
-        router.push(`/${name}`)
+        router.push(`/${langName}`)
     }
     const saveNoteHandler = () => {
         dispatch(saveNote([title, description]));
@@ -72,28 +75,27 @@ const pa = (props) => {
     return (
 
         <div className={styles["main-div"]}>
-                <div className={styles["detail-div"]}>
-                    INfo
-                </div>
-                <div className={styles["extras-div"]}>
-                
-
-                <div onClick={addTextHandler}>Add Text</div>
-                        <label for="addFile" className={styles.imgBtn}>Add Image<input className={styles.img} type="file" ref={file} id="addFile" onChange={addImageHandler}/></label>
-                    <div onClick={saveNoteHandler}>Save Note</div>
-                    <div onClick={deleteNoteHandler}>Delete Note</div>
-
-                </div>
-                <div className={styles["notes-div-parent"]}>
-                    <div className={styles["notes-div-child"]}>
+            <div className={styles["detail-div"]}>
+                INfo
+            </div>
+            
+            <div className={styles["extras-div"]}>
+                <div onClick={addTextHandler}><span class="material-symbols-outlined">text_fields</span> Add Text</div>
+                <label for="addFile" className={styles.imgBtn}><span class="material-symbols-outlined">image</span>Add Image<input className={styles.img} type="file" ref={file} id="addFile" onChange={addImageHandler}/></label>
+                <div className={styles.save} onClick={saveNoteHandler}><span class="material-symbols-outlined">bookmark_added</span>Save Note</div>
+                <div className={styles.delete} onClick={deleteNoteHandler}><span class="material-symbols-outlined">delete_forever</span>Delete Note</div>
+            </div>
+            
+            <div className={styles["notes-div-parent"]}>
+                <div className={styles["notes-div-child"]}>
                     <div className={styles.container} contentEditable="true">
-            <input placeholder='Title' ref={titleRef} value={ title} onChange={changeTitle} className={styles.title} contentEditable="true"/>
-            <input placeholder='Description' ref={descriptionRef} value={ description} onChange={changeDescription} className={styles.description} contentEditable="true"/>
+                        <input placeholder='Title' ref={titleRef} value={ title} onChange={changeTitle} className={styles.title} contentEditable="true"/>
+                        <input placeholder='Description' ref={descriptionRef} value={ description} onChange={changeDescription} className={styles.description} contentEditable="true"/>
                         <NoteDetail notes={newNotes} save={ saveNoteHandler} />
-        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
 

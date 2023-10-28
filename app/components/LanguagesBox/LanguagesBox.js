@@ -10,9 +10,9 @@ import InputPopUp from "../PopUps/InputPopUp";
 
 const LanguagesBox = (props) => {
   let state = useSelector((state) => state.languages);
+  const loadingState = state.loading;
   const isOverlayActive = useSelector((state) => state.languages.inputPopup);
   const [mode, setMode] = useState(""); //this is for whether a language is being added or deleted
-  let loadingState = state.loading;
   let popupActive = state.inputPopup;
   
   const dispatch = useDispatch();
@@ -43,7 +43,11 @@ const LanguagesBox = (props) => {
   
   if (languages!== null || languages !== undefined) {
     return (
-      <div className={`${styles["top-div"]} ${isOverlayActive? styles["overlay-active"]:""}`}>
+      <div className={`${styles["top-div"]} ${isOverlayActive ? styles["overlay-active"] : ""}`}>
+        {loadingState == LOADING_STATE.IDLE &&
+        <div className={styles["typewriter"]}>
+          <h1>My Notes</h1>
+        </div>}
         <div className={`${styles["languages-box"]}`}>
         {languages.map((language) => {
             return (

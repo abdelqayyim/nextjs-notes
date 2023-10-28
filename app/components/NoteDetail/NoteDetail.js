@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import styles from './NoteDetail.module.css';
 import Text from './Text';
 import IMG from './IMG';
+import { addText } from '@/app/redux/slice';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateNote } from '@/app/redux/slice';
 
@@ -15,18 +16,17 @@ const NoteDetail = (props) => {
     const [notes, setNotes] = useState([]);
     
     
-    useEffect(() => { setNotes(prev => globalNotes); }, [globalNotes]);
+  useEffect(() => { setNotes(prev => globalNotes); }, [globalNotes]);
+  
 
     const deleteNoteHandler = (index) => {
         let temp = [...notes];
-        console.log(temp);
         temp.splice(index, 1);
         setNotes(prev => temp);
         dispatch(updateNote(temp));
 
     }
     const moveHandler = (index) => {
-    //     console.log(...notes);
     let temp = [...notes];
     let t = temp[index - 1];
     temp[index - 1] = temp[index];
@@ -48,8 +48,8 @@ const NoteDetail = (props) => {
       setInitialLoad(false);
     }
   }, []);
-    
-    
+
+  
 
   return (
     <div ref={container} className={styles.container}>

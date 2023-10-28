@@ -1,11 +1,13 @@
 .note-info{
     position: relative;
-    color: black;
+    color: white;
     height: 200px;
     width: 210px;
-    background-color: white;
+    background-color:rgb(16,16,16);
     box-sizing: border-box;
     margin: 0 30px 20px 0;
+    border-radius:5px;
+    border: 1px solid rgb(39,121,167);
     
     -webkit-box-shadow: 0px 0px 5px -2px #000000; 
 box-shadow: 0px 0px 5px -2px #000000;
@@ -14,6 +16,7 @@ box-shadow: 0px 0px 5px -2px #000000;
 }
 .note-info:hover{
     cursor: pointer;
+    border: 1px solid green;
 }
 .note-info.dark{
     color: white;
@@ -60,6 +63,7 @@ box-shadow: 0px 0px 5px -2px #000000;
 }
 .delete:hover{
     transform: scale(1.1);
+    color: red;
 }
 .myHR{
     color: black;

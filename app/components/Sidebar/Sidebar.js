@@ -3,11 +3,13 @@ import styles from './Sidebar.module.css';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentLanguage, fetchLanguages } from '@/app/redux/slice';
+import { useRouter } from 'next/navigation';
 
 import InputPopUp from '../PopUps/InputPopUp';
 
 const Sidebar = (props) => {
     const dispatch = useDispatch();
+    const router = useRouter();
     const languages = useSelector((state) => state.languages.value);
     const currentLanguageID = useSelector((state) => state.languages.currentLanguageID);
 
@@ -19,7 +21,11 @@ const Sidebar = (props) => {
 
     return (
         <div className={styles.sidebar}>
-            <div className={styles.user}>Logo</div>
+            <div className={styles.user} onClick={()=>router.push(`/`)}>
+            <div className={styles["typewriter"]}>
+          <h1>My Notes</h1>
+        </div>
+            </div>
             <ul className={styles.list}>
                 {languages.length > 0 && languages.map((language)=>{
                     return (

@@ -231,6 +231,7 @@ const addLanguage = createAsyncThunk(
 const addNote = createAsyncThunk( //receives only the note
     'languages/addNote',
     async (note, { getState, dispatch }) => {
+        let temp = { ...note, noteDetail: [{text: "Insert Text"}]}
         const state = getState();
         const currentLanguageID = state.languages.currentLanguageID;
         try {
@@ -241,7 +242,7 @@ const addNote = createAsyncThunk( //receives only the note
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body:JSON.stringify(note),
+                body:JSON.stringify(temp),
             })
             dispatch(fetchLanguages());
         }
