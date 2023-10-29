@@ -3,7 +3,7 @@ import styles from "./layout.module.css";
 import React, { useEffect } from "react";
 import { useParams } from "next/navigation";
 import Sidebar from "../components/Sidebar/Sidebar";
-import Note from "../components/note/Note";
+import Note from "../components/Note/Note";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchLanguages,

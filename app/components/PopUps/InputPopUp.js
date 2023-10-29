@@ -22,24 +22,14 @@ const AddLanguagePopUp = (props) => {
     dispatch(togglePopup());
   }
   const submitHandler = (event) => {
-    if (props.mode == "add") {
+    if (props.mode == "Add") {
       dispatch(addLanguage(inputValue)); 
     } else {
       dispatch(deleteLanguage(inputValue));
     }
-    dispatch(togglePopup());
-  }
-  const addNoteHandler = () => {
-    let note = {
-      title: titleValue,
-      description: descriptionValue,
-      noteDetail: "",
-      _id: ""
-    }
-    dispatch(addNote(note));
-    // setTimeout(() => { 
+    // setTimeout(() => {
     //   dispatch(fetchLanguages());
-    // },1000)
+    // },2000)
     dispatch(togglePopup());
   }
   return ReactDOM.createPortal(
@@ -54,15 +44,6 @@ const AddLanguagePopUp = (props) => {
           <button onClick={submitHandler}>Submit</button>
         </div>
       }
-      {props.mode == 'add-note' && 
-        <div className={styles.notePopup}>
-        <label for="input">Add Note</label>
-        <input placeholder="Title" onChange={(event) =>setTitleValue(event.target.value)} className={styles.title} type="text" id="title" name="userInput" value={titleValue} />
-        <textarea className={styles.description} onChange={(event) => setDescriptionValue(event.target.value)}></textarea>
-          <button onClick={addNoteHandler}>Submit</button>
-        </div>
-      }
-      
     </div>
     ,
     document.querySelector(".overlay")

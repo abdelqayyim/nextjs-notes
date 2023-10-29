@@ -18,7 +18,7 @@ import NoteImage from "./NoteImage";
 // import "prismjs/components/prism-typescript";
 
 // import { AppProvider } from "../../app/AppContext";
-import NoteLanguage from "../button/NoteLanguage";
+import NoteLanguage from "../Button/NoteLanguage";
 
 const Editor = (props) => {
   let deleteBtn = useRef();

@@ -89,9 +89,8 @@ export const appSlice = createSlice({
                 state.value = [...state.value, {_id:"",name:action.meta.arg, note:[]}];
                 state.errorMessage = "Language Successfully Added";
                 state.errorSign = "positive";
-                setTimeout(() => {
-                    state.loading = LOADING_STATE.IDLE;
-                }, 4000);
+                state.loading = LOADING_STATE.IDLE;
+               
             })
             .addCase(addLanguage.rejected, (state, action) => {
                 state.loading = LOADING_STATE.FAILED;
@@ -207,14 +206,14 @@ const languageExists = (language, currentLanguages) => {
 }
 const addLanguage = createAsyncThunk(
     'languages/addLanguage',
-    async (language_id, { getState }) => {
+    async (language, { getState }) => {
         const state = getState();
         const languages = state.languages.value;
         try {
-            if (languageExists(language_id, languages)) {
+            if (languageExists(language, languages)) {
                 throw new Error("Language Already exists"); 
             }
-            const response = await fetch(URL + `${language_id}`, {
+            const response = await fetch(URL + `${language}`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
