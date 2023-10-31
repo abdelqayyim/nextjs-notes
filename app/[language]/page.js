@@ -58,8 +58,9 @@ const Page = (props) => {
       <div className={styles["notes-div-parent"]}>
         <div className={styles["notes-div-child"]}>
           <div className={styles["notes-div-child"]}>
-            {notes != undefined &&
-              notes.map((note) => (
+            {notes.length == 0 && <div style={{color: "white"}}>No notes for this language yet</div>}
+            {(notes != undefined && notes.length > 0)&&
+              [...notes].reverse().map((note) => (
                 <Note
                   detail={note.noteDetail}
                   title={note.title}

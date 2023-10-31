@@ -65,9 +65,13 @@ check_box
         
          {editing== true && <textArea onClick={(event)=>setHeightHandler(event.target)} ref={textArea} wrap="off" className={`${styles.textArea} ${textValue.includes(`"`)|| textValue.includes("`")?styles.quote: ""}`}  value={textValue} onChange={(event)=>updateTextHandler(event,event.target.value)}>{textValue}</textArea>}   
         
-        {editing == false && <SyntaxHighlighter ref={highlighter} style={docco} showLineNumbers={true} className={styles.highlighter} language="javascript">
-            {textValue}
-        </SyntaxHighlighter>}
+        {editing == false &&
+            <div ref={highlighter} className={styles.highlighter}>
+                <SyntaxHighlighter  style={docco} showLineNumbers={true} language="javascript">
+                    {textValue}
+                </SyntaxHighlighter>
+            </div>
+        }
     </div>
   );
 };

@@ -28,8 +28,12 @@
 }
 .highlighter{
     width:100%;
-    background-color: purple;
     pointer-events: none;
+    background-color: green;
+}
+.highlighter:hover{
+    transform: scale(1.2);
+    
 }
 .highlighter::-webkit-scrollbar {
    display: none;

@@ -18,6 +18,14 @@ const Sidebar = (props) => {
         dispatch(setCurrentLanguage(id));
         dispatch(fetchLanguages());
     }
+    function toTitleCase(str) {
+        return str.replace(
+          /\w\S*/g,
+          function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+          }
+        );
+      }
 
     return (
         <div className={styles.sidebar}>
@@ -27,10 +35,10 @@ const Sidebar = (props) => {
         </div>
             </div>
             <ul className={styles.list}>
-                {languages.length > 0 && languages.map((language, index)=>{
+                {languages.length > 0 && [...languages].reverse().map((language, index)=>{
                     return (
                         <Link key={index} className={styles.link} href={`/${language.name.replace(/\s/g, "")}`}>
-                            <li onClick={()=>languageOnClick(language._id)} key={language._id} className={`${styles["list-item"]} ${language._id == currentLanguageID? styles.active: ""}`}>{ language.name}</li>
+                            <li onClick={()=>languageOnClick(language._id)} key={language._id} className={`${styles["list-item"]} ${language._id == currentLanguageID? styles.active: ""}`}>{ toTitleCase(language.name)}</li>
                         </Link>
                     )
                 })}

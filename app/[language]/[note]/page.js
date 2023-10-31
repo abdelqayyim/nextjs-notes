@@ -25,7 +25,6 @@ const Page = (props) => {
     const descriptionRef = useRef();
 
     if (title == null) {
-        console.log(langName);
         router.push(`/${langName}`);
         return;
     }
@@ -64,6 +63,8 @@ const Page = (props) => {
     const changeDescription = () => {
         setDescription(descriptionRef.current.value);
     }
+    
+   
 
     //NOTE: this should return d <div>, the layout takes care of the layout (wink)
     return (

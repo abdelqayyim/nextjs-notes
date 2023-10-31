@@ -1,6 +1,7 @@
 For next time:
-    1 - Make text unclickable unless edit button is pressed 
-    2 - Add confirmatio before deleting language/button 
+    1 - Add ability to change language title 
+    2 - Add ability to add logo to language, rather than just text 
+    3 - Add confirmation before deleting language/note 
 
 Deployment:
     1 - Deployed with Vercel 

@@ -15,6 +15,7 @@
 .parent-div.active{
     transform: translateY(0%);
 }
+
 .logo{
     width:20%;
     height: 100%;

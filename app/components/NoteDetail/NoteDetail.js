@@ -16,8 +16,16 @@ const NoteDetail = (props) => {
     const [notes, setNotes] = useState([]);
     
     
-  useEffect(() => { setNotes(prev => globalNotes); }, [globalNotes]);
-  
+  useEffect(() => {
+    let temp = [...globalNotes];
+    if (temp.length == 1 && typeof temp[0] == 'string') {
+      let str = temp[0];
+      setNotes(prev => [{ text: str }]);
+    } else {
+      setNotes(prev => [...globalNotes]);
+    }
+    
+  }, [globalNotes]);
 
     const deleteNoteHandler = (index) => {
         let temp = [...notes];

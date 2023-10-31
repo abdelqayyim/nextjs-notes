@@ -21,8 +21,8 @@ const InputError = (props) => {
   return (
     <div className={`${styles["parent-div"]} ${active? styles.active: ""}`}>
       <div className={styles["logo"]}>
-        {sign == "negative" && <span className={`material-symbols-outlined`} style={{ fontSize: '40px', color: "red" }}>close</span>}
-        {sign == "positive" && <span class="material-symbols-outlined" style={{ fontSize: '40px', color: "black" }}>check</span>}
+        {sign == "negative" && <span className={`material-symbols-outlined`} style={{ fontSize: '40px', color: "#F70000" }}>close</span>}
+        {sign == "positive" && <span class="material-symbols-outlined" style={{ fontSize: '40px', color: "#007C02" }}>check</span>}
         
       </div>
       <div className={styles.message}>{message}</div>

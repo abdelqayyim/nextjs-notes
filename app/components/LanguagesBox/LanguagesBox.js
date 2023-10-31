@@ -26,7 +26,18 @@ const LanguagesBox = (props) => {
     dispatch(fetchLanguages());
   }, [dispatch]);
 
-  const languages = useSelector((state) => state.languages.value);
+  let languages = useSelector((state) => state.languages.value);
+  if (languages.length > 0) {
+  languages = [...languages].reverse();
+}
+  function toTitleCase(str) {
+    return str.replace(
+      /\w\S*/g,
+      function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
+  }
 
   function titleCase(str) {
     str = str.toLowerCase().split(" ");
@@ -61,7 +72,7 @@ const LanguagesBox = (props) => {
           {languages.map((language) => {
             return (
               <LanguageButton
-                name={language.name}
+                name={toTitleCase(language.name)}
                 key={language._id}
                 moveUp={props.moveUp}
                 clicked={() => languageButtonHandler(language._id)}
