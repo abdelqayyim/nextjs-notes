@@ -1,53 +1,76 @@
 "use client";
 import styles from "./layout.module.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Note from "../components/Note/Note";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  fetchLanguages,
+  setValue,
+  setlanguagesList,
   setCurrentLanguage,
-  togglePopup,
+  setCurrentNotes,
+  togglePopup
 } from "../redux/slice";
-import { LOADING_STATE } from "../redux/slice";
 import Spinner from "../components/Spinner/Spinner";
 
 const Page = (props) => {
+  const URL = "https://fair-teal-gharial-coat.cyclic.app/languages/";
   const dispatch = useDispatch();
-  const languages = useSelector((state) => state.languages.value);
-  let loadingState = useSelector((state) => state.languages.loading);
-  const currentParamLang = decodeURIComponent(useParams().language);
-  let curr;
+  const globalLanguage = useSelector((state) => state.languages.currentLanguageID);
+  const globalNotes = useSelector((state) => state.languages.currentNotes);
+  const languageName = useParams().language.toLowerCase();
+  const [notes, setNotes] = useState(globalNotes);
+
+  
+  useEffect(() => {
+    setNotes(globalNotes);
+  },[globalNotes])
 
   useEffect(() => {
-    if (languages.length === 0) {
-      // Dispatch the action to fetch languages when the component mounts
-      dispatch(fetchLanguages());
-    }
-  }, [dispatch, languages]);
+    if (globalLanguage == "") {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(URL, {
+              method: 'GET',
+              headers: {
+                  'Accept': 'application/json'
+              }
+          });
+          const data = await response.json();
+          let formattedData = data.map(obj => ({ _id: obj._id, name: obj.name }));
+          dispatch(setValue([...data]));
+          dispatch(setlanguagesList(formattedData));
+          let newID;
+          let temp = [...data];
+          let newNotes = [];
 
-  for (let language of languages) {
-    if (language.name.replace(/\s/g, "") == currentParamLang) {
-      curr = language._id;
-      dispatch(setCurrentLanguage(language._id));
-      break;
+          for (let i = 0; i < data.length; i++) {
+            if (data[i].name.replace(/\s/g, "").toLowerCase() == languageName) {
+              newID = data[i]._id;
+              newNotes = [...data[i].notes].reverse();
+            }
+          }
+          dispatch(setCurrentLanguage(newID));
+          dispatch(setCurrentNotes(newNotes));
+          return data;
+        } catch (error) {
+          throw error;
+      }
+      } 
+      fetchData()
     }
-  }
+  },[globalLanguage])
 
-  let notes = [];
-  let langObject = languages.filter((language) => {
-    if (language._id == curr) {
-      notes = language.notes;
-      return language;
-    }
-  });
-  const addNoteHandler = () => {
+
+  const addNoteHandler = ()=>{
     dispatch(togglePopup());
-  };
-
-  if (loadingState == LOADING_STATE.LOADING) {
-    return <Spinner message={"Loading Notes"} />;
   }
+
+  
+
+  // if (active) {
+  //   return <Spinner/>;
+  // }
 
   return (
     <div className={styles["main-div"]}>
@@ -60,15 +83,15 @@ const Page = (props) => {
           <div className={styles["notes-div-child"]}>
             {notes.length == 0 && <div style={{color: "white"}}>No notes for this language yet</div>}
             {(notes != undefined && notes.length > 0)&&
-              [...notes].reverse().map((note) => (
-                <Note
-                  detail={note.noteDetail}
-                  title={note.title}
-                  description={note.description}
-                  id={note._id}
-                  key={note._id}
-                />
-              ))}
+              notes.map((note) => {
+                return  <Note
+                detail={note.noteDetail}
+                title={note.title}
+                description={note.description}
+                id={note._id}
+                key={note._id}
+              />
+              })}
           </div>
         </div>
       </div>

@@ -11,7 +11,6 @@ import {setCurrentNotes, setErrorMessage, setSpinnerMessage} from "../../redux/s
 const AddLanguagePopUp = (props) => {
   const URL = "https://fair-teal-gharial-coat.cyclic.app/languages/";
   // used in languagesBox component
-  const isOverlayActive = useSelector((state) => state.languages.inputPopup);
   const languages = useSelector((state)=>state.languages.languagesList);
   const [inputValue, setInputValue] = useState("");
   const [titleValue, setTitleValue] = useState("");

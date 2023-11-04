@@ -1,4 +1,7 @@
 For next time:
+     - Add loading and error to requests
+    - deleteNote is giving me issues
+     - fix what happens when we press on sidebar language
     - Update the note to use useEffect when a new note is added
     - Change fetching to be withing components. 
     1 - Add ability to change language title 
