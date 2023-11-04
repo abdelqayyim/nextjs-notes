@@ -1,4 +1,6 @@
 For next time:
+    - Update the note to use useEffect when a new note is added
+    - Change fetching to be withing components. 
     1 - Add ability to change language title 
     2 - Add ability to add logo to language, rather than just text 
     3 - Add confirmation before deleting language/note 

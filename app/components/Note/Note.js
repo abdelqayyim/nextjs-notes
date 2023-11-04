@@ -1,14 +1,10 @@
 import React, { useContext } from "react";
 import styles from "./Note.module.css";
-// import { ACTIONS, AppProvider } from "../../app/AppContext";
-// import { IonIcon } from '@ionic/react';
-// import { trashOutline } from 'ionicons/icons';
 import { useRouter, usePathname } from 'next/navigation';
-import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentNote, toggleTakingNote, deleteNote, fetchLanguages } from "@/app/redux/slice";
+import { useDispatch } from 'react-redux';
+import { setCurrentNote, deleteNote} from "@/app/redux/slice";
 
 const Note = (props) => {
-  const state = useSelector((state) => state.languages);
   const dispatch = useDispatch();
   const router = useRouter();
   const pathname = usePathname();

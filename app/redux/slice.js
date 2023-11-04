@@ -10,20 +10,38 @@ export const appSlice = createSlice({
   name: 'counter',
     initialState: {
         value: [],
+        languagesList: [], // [{_id:, name}]
         currentLanguageID: "",
         currentNote: { _id: null, title: null, description: null, noteDetail: null },
         currentNotes: [],
         loading: LOADING_STATE.IDLE,
-        errorMessage: "",
-        errorSign: "",
+        errorMessage: "",// for bottom popUp
+        errorSign: "", // for bottom popUp
+        spinnerMessage: "", 
         inputPopup: false, // this is for add/delete language,
         takingNote: false, //this is for the add, delete button to show when the user is taking notes on a particular note,
         viewingNotes: true,
   },
     reducers: {
+        setValue: (state, action) => {
+            state.value = action.payload;
+        },
+        setSpinnerMessage: (state, action) => {
+          state.spinnerMessage = action.payload;  
+        },
+        setErrorMessage: (state, action) => {
+            state.errorMessage = action.payload.message;
+            state.errorSign = action.payload.sign;
+        },
+        setlanguagesList: (state, action) => {
+            state.languagesList = action.payload;
+        },
         setCurrentLanguage: (state, action) => {
             state.currentLanguageID = action.payload;
         }, 
+        setCurrentNotes: (state, action) => {
+            state.currentNotes = [...action.payload];
+        },
         setCurrentNote: (state, action) => {
             state.currentNote = action.payload
         },
@@ -135,6 +153,7 @@ export const appSlice = createSlice({
             })
             .addCase(deleteNote.fulfilled, (state, action) => {
                 state.loading = LOADING_STATE.SUCCEEDED;
+                console.log(action);
                 state.errorMessage = "Note Successfully Deleted";
                 state.errorSign = "positive";
                 state.loading = LOADING_STATE.IDLE;
@@ -328,10 +347,11 @@ const saveNote = createAsyncThunk( //receives only the note
 const deleteLanguage = createAsyncThunk(
     'languages/deleteLanguage',
     async (language, { getState }) => {
+        console.log(language);
         const state = getState();
         const languages = state.languages.value;
         const l = state.languages.value.filter(lang => {
-            return lang.name == language
+            return lang.name.toLowerCase() == language
         });
         try {
             if (!languageExists(language, languages)) {
@@ -358,5 +378,5 @@ const deleteLanguage = createAsyncThunk(
 
 // Action creators are generated for each case reducer function
 export { fetchLanguages, addLanguage,deleteLanguage, addNote,deleteNote, getNotes, saveNote };
-export const { setCurrentLanguage, togglePopup, resetError, setCurrentNote,takingNote, addText,viewingNotes,addImage,updateNote, getCurrentNote } = appSlice.actions;
+export const { setCurrentNotes, setlanguagesList, setErrorMessage, setSpinnerMessage, setValue, setCurrentLanguage, togglePopup, resetError, setCurrentNote,takingNote, addText,viewingNotes,addImage,updateNote, getCurrentNote } = appSlice.actions;
 export default appSlice.reducer;

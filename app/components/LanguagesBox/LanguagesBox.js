@@ -5,31 +5,62 @@ import LanguageButton from "../Button/LanguageButton";
 import DropArrow from "../DropArrow/DropArrow";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  fetchLanguages,
+  setValue,
   setCurrentLanguage,
-  togglePopup,
-  viewingNotes,
+  setSpinnerMessage,
+  setErrorMessage,
+  setlanguagesList
 } from "../../redux/slice";
 import { LOADING_STATE } from "../../redux/slice";
 import InputPopUp from "../PopUps/InputPopUp";
 
 const LanguagesBox = (props) => {
+  const URL = "https://fair-teal-gharial-coat.cyclic.app/languages/";
   let state = useSelector((state) => state.languages);
+  const dispatch = useDispatch();
   const loadingState = state.loading;
   const isOverlayActive = useSelector((state) => state.languages.inputPopup);
   const [mode, setMode] = useState(""); //this is for whether a language is being added or deleted
   let popupActive = state.inputPopup;
+  const currentLanguages = useSelector((state) => state.languages.languagesList);
+  const [currList, setCurrList] = useState(currentLanguages);
 
-  const dispatch = useDispatch();
   useEffect(() => {
-    // Dispatch the action to fetch languages when the component mounts
-    dispatch(fetchLanguages());
-  }, [dispatch]);
+    setCurrList(currentLanguages);
+  }, [currentLanguages])
 
-  let languages = useSelector((state) => state.languages.value);
-  if (languages.length > 0) {
-  languages = [...languages].reverse();
-}
+
+  //fetch the languages
+  useEffect(() => {
+    if (currList.length == 0) {
+      const fetchData = async () => {
+        dispatch(setSpinnerMessage("Loading Languages"));
+        try {
+          const response = await fetch(URL, {
+              method: 'GET',
+              headers: {
+                  'Accept': 'application/json'
+              }
+          });
+          const data = await response.json();
+          dispatch(setSpinnerMessage(""));
+          let formattedData = data.map(obj => ({ _id: obj._id, name: obj.name }));
+          dispatch(setlanguagesList(formattedData));
+          dispatch(setValue(data));
+          return data;
+        } catch (error) {
+          dispatch(setErrorMessage({ message: "Failed to fetch, reload page", sign: "negative" }));
+          dispatch(setSpinnerMessage(""));
+          throw error;
+      }
+      } 
+      fetchData()
+    }
+  }, [currList])
+  //check to see if languages are already loading
+
+
+  
   function toTitleCase(str) {
     return str.replace(
       /\w\S*/g,
@@ -39,24 +70,18 @@ const LanguagesBox = (props) => {
     );
   }
 
-  function titleCase(str) {
-    str = str.toLowerCase().split(" ");
-    for (var i = 0; i < str.length; i++) {
-      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
-    }
-    return str.join(" ");
-  }
-
   const languageButtonHandler = (id) => {
     dispatch(setCurrentLanguage(id));
-    dispatch(viewingNotes(true));
+    // dispatch(viewingNotes(true));
   };
 
   const changeMode = (newMode) => {
-    setMode(newMode);
+    setMode(newMode); // for input or deletion of language
   };
 
-  if (languages !== null || languages !== undefined) {
+
+
+  if (currList.length > 0) {
     return (
       <div
         className={`${styles["top-div"]} ${
@@ -69,19 +94,16 @@ const LanguagesBox = (props) => {
           </div>
         )}
         <div className={`${styles["languages-box"]}`}>
-          {languages.map((language) => {
+          {[...currList].reverse().map((language) => {
             return (
               <LanguageButton
                 name={toTitleCase(language.name)}
                 key={language._id}
-                moveUp={props.moveUp}
                 clicked={() => languageButtonHandler(language._id)}
               />
             );
           })}
-          {loadingState == LOADING_STATE.IDLE && (
-            <DropArrow mode={changeMode} />
-          )}
+          <DropArrow mode={changeMode} />
         </div>
         {popupActive && <InputPopUp mode={mode} />}
       </div>

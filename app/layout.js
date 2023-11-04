@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import Background from './components/Background';
 import AppProvider from './redux/AppProvider';
 import InputError from './components/PopUps/InputError';
+import Spinner from './components/Spinner/Spinner';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -19,10 +20,8 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <Background>
           <AppProvider>
-            {/* this is for the error that shows up from the bottom */}
             {children}
-            <InputError> 
-            </InputError>
+            <InputError /> 
           </AppProvider>
         </Background>
         <div className="overlay"></div>

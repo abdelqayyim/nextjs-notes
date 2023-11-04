@@ -5,8 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { resetError } from "@/app/redux/slice";
 const InputError = (props) => {
   const dispatch = useDispatch();
-  // const message = "Success";
-  // const sign = "positive";
   const message = useSelector((state) => state.languages.errorMessage);
   const sign = useSelector((state) => state.languages.errorSign);
   let active = message !== "";

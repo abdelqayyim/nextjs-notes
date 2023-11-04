@@ -38,7 +38,8 @@ const Sidebar = (props) => {
                 {languages.length > 0 && [...languages].reverse().map((language, index)=>{
                     return (
                         <Link key={index} className={styles.link} href={`/${language.name.replace(/\s/g, "")}`}>
-                            <li onClick={()=>languageOnClick(language._id)} key={language._id} className={`${styles["list-item"]} ${language._id == currentLanguageID? styles.active: ""}`}>{ toTitleCase(language.name)}</li>
+                            <li onClick={() => languageOnClick(language._id)} key={language._id} className={`${styles["list-item"]} ${styles.tooltip} ${language._id == currentLanguageID ? styles.active : ""}`}>
+                                <span className={styles.tooltiptext}>{ toTitleCase(language.name)}</span>{toTitleCase(language.name)}</li>
                         </Link>
                     )
                 })}
