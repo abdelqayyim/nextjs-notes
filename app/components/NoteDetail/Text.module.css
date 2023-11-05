@@ -59,3 +59,20 @@
     background-color: rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
+/* .overlay{
+    position: absolute;
+    background-color:purple;
+    width: 100%;
+} */
+.syntax{
+    user-select: none ; /* Disable text selection */
+  cursor: default; /* Set default cursor */
+  pointer-events: none; /* Disable pointer events */
+  cursor: default;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
+  caret-color: transparent;
+}

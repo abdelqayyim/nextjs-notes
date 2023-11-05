@@ -32,7 +32,7 @@ const Text = (props) => {
         }
         else {
             //TODO: set cursor pointer on syntaxhighlighter
-            // highlighter.current.style.pointerEvents = 'none';
+            //highlighter.current.style.pointerEvents = 'none';
             
         }
         
@@ -67,7 +67,8 @@ check_box
         
         {editing == false &&
             <div ref={highlighter} className={styles.highlighter}>
-                <SyntaxHighlighter  style={docco} showLineNumbers={true} language="javascript">
+                {/* <div className={ styles.overlay}>Hello</div> */}
+                <SyntaxHighlighter className={ styles.syntax} style={docco} showLineNumbers={true} language="javascript">
                     {textValue}
                 </SyntaxHighlighter>
             </div>
