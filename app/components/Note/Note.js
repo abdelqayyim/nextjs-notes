@@ -49,7 +49,7 @@ const Note = (props) => {
   }
   }
   const responseHandler = (response) => {
-    console.log(response);
+    setActiveConfirmation(false);
     if (response == 'yes') {
       deleteNoteHandler();
     }

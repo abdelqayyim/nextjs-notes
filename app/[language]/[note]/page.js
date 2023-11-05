@@ -57,6 +57,7 @@ const Page = (props) => {
             deleteNoteHandler();
             router.replace(`/${langName}`);
         }
+        
     }
     const deleteNoteHandler = async () => {
         let note = {
