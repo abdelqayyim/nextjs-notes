@@ -9,9 +9,12 @@ import {
   setlanguagesList,
   setCurrentLanguage,
   setCurrentNotes,
-  togglePopup
+  togglePopup,
+  setSpinnerMessage,
+  setErrorMessage
 } from "../redux/slice";
 import Spinner from "../components/Spinner/Spinner";
+import Confirmation from "../components/Confirmation/Confirmation";
 
 const Page = (props) => {
   const URL = "https://fair-teal-gharial-coat.cyclic.app/languages/";
@@ -20,14 +23,19 @@ const Page = (props) => {
   const globalNotes = useSelector((state) => state.languages.currentNotes);
   const languageName = useParams().language.toLowerCase();
   const [notes, setNotes] = useState(globalNotes);
+  const message = useSelector((state) => state.languages.spinnerMessage);
+  let active = message !== "";
+  const [activeConfirmation, setActiveConfirmation] = useState(false);
 
   
   useEffect(() => {
     setNotes(globalNotes);
-  },[globalNotes])
+  }, [globalNotes])
+
 
   useEffect(() => {
     if (globalLanguage == "") {
+      dispatch(setSpinnerMessage("Loading Languages"));
       const fetchData = async () => {
         try {
           const response = await fetch(URL, {
@@ -52,8 +60,11 @@ const Page = (props) => {
           }
           dispatch(setCurrentLanguage(newID));
           dispatch(setCurrentNotes(newNotes));
+          dispatch(setSpinnerMessage(""));
           return data;
         } catch (error) {
+          dispatch(setErrorMessage({ message: "Failed to fetch, reload page", sign: "negative" }));
+          dispatch(setSpinnerMessage(""));
           throw error;
       }
       } 
@@ -68,12 +79,13 @@ const Page = (props) => {
 
   
 
-  // if (active) {
-  //   return <Spinner/>;
-  // }
+  if (active) {
+    return <Spinner/>;
+  }
 
   return (
-    <div className={styles["main-div"]}>
+    <>
+      <div className={styles["main-div"]}>
       <div className={styles["detail-div"]}>INfo</div>
       <div className={styles["extras-div"]}>
         <div onClick={addNoteHandler}>Add Note</div>
@@ -96,6 +108,7 @@ const Page = (props) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 export default Page;

@@ -6,12 +6,13 @@ import { fetchLanguages, setlanguagesList, togglePopup } from "../../redux/slice
 // import { IonIcon } from '@ionic/react';
 // import { closeOutline } from 'ionicons/icons';
 import Spinner from "../Spinner/Spinner"
-import {setCurrentNotes, setErrorMessage, setSpinnerMessage} from "../../redux/slice";
+import {setCurrentNotes, setErrorMessage, setSpinnerMessage, setValue} from "../../redux/slice";
 
 const AddLanguagePopUp = (props) => {
   const URL = "https://fair-teal-gharial-coat.cyclic.app/languages/";
-  // used in languagesBox component
-  const languages = useSelector((state)=>state.languages.languagesList);
+  // used in languagesBox component1
+  const languages = useSelector((state) => state.languages.languagesList);
+  let globalValue = useSelector((state) => state.languages.value);
   const [inputValue, setInputValue] = useState("");
   const [titleValue, setTitleValue] = useState("");
   const [descriptionValue, setDescriptionValue] = useState("");
@@ -102,8 +103,9 @@ const AddLanguagePopUp = (props) => {
       noteDetail: [{text: "Add text"}],
       _id: ""
     }
-  try {
-    dispatch(setSpinnerMessage("Adding New Note"));
+    try {
+      dispatch(togglePopup());
+      dispatch(setSpinnerMessage("Adding New Note"));
       //check to see if title already exists
       const response = await fetch(URL + `${currentLanguageID}/newNote`, {
           method: 'POST',
@@ -113,15 +115,25 @@ const AddLanguagePopUp = (props) => {
           },
           body:JSON.stringify(note),
       })
-    dispatch(setSpinnerMessage(""));
     const data = await response.json();
     let newNotes = [...data.notes];
-    dispatch(setCurrentNotes(newNotes));
-    dispatch(setErrorMessage({ message: "Note sucessfully added", sign: "positive" }));
-    dispatch(togglePopup());
+      dispatch(setCurrentNotes(newNotes)); 
+      // now also update the global notes after this
+      let tempVal = [...globalValue];
+      tempVal = globalValue.map((languageOBJ) => {
+        if (languageOBJ._id === currentLanguageID) {
+          return { ...languageOBJ, notes: [...newNotes] };
+        }
+        return languageOBJ;
+      })
+      dispatch(setValue(tempVal));
+
+      dispatch(setErrorMessage({ message: "Note sucessfully added", sign: "positive" }));
+      dispatch(setSpinnerMessage(""));
   }
   catch (error) {
-    dispatch(setErrorMessage({ message: `${error}`, sign: "negative" }));
+      dispatch(setErrorMessage({ message: `${error}`, sign: "negative" }));
+      dispatch(setSpinnerMessage(""));
       throw error;
   }
 }

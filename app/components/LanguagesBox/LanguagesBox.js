@@ -46,10 +46,10 @@ const LanguagesBox = (props) => {
           dispatch(setSpinnerMessage(""));
           let formattedData = data.map(obj => ({ _id: obj._id, name: obj.name }));
           dispatch(setlanguagesList(formattedData));
-          dispatch(setValue(data));
+          dispatch(setValue(data))
           return data;
         } catch (error) {
-          dispatch(setErrorMessage({ message: "Failed to fetch, reload page", sign: "negative" }));
+          dispatch(setErrorMessage({ message: `${error}`, sign: "negative" }));
           dispatch(setSpinnerMessage(""));
           throw error;
       }
@@ -58,7 +58,6 @@ const LanguagesBox = (props) => {
     }
   }, [currList])
   //check to see if languages are already loading
-
 
   
   function toTitleCase(str) {

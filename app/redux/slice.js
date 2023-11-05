@@ -45,6 +45,9 @@ export const appSlice = createSlice({
         setCurrentNote: (state, action) => {
             state.currentNote = action.payload
         },
+        updateNoteObject:(state, action)=> {
+            console.log(action.payload);
+        },
         togglePopup: (state, action) => {
             state.inputPopup = !state.inputPopup
         },
@@ -378,5 +381,5 @@ const deleteLanguage = createAsyncThunk(
 
 // Action creators are generated for each case reducer function
 export { fetchLanguages, addLanguage,deleteLanguage, addNote,deleteNote, getNotes, saveNote };
-export const { setCurrentNotes, setlanguagesList, setErrorMessage, setSpinnerMessage, setValue, setCurrentLanguage, togglePopup, resetError, setCurrentNote,takingNote, addText,viewingNotes,addImage,updateNote, getCurrentNote } = appSlice.actions;
+export const { updateNoteObject, setCurrentNotes, setlanguagesList, setErrorMessage, setSpinnerMessage, setValue, setCurrentLanguage, togglePopup, resetError, setCurrentNote,takingNote, addText,viewingNotes,addImage,updateNote, getCurrentNote } = appSlice.actions;
 export default appSlice.reducer;
