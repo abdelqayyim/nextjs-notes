@@ -1,0 +1,70 @@
+.sidebar-parent-div {
+    background-color: #EFEDED; 
+    width: 230px;
+    border-radius: 10px; 
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in;
+}
+.sidebar-parent-div-collapsed{
+    background-color: #EFEDED; 
+    width: 50px;
+    border-radius: 10px; 
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in;
+}
+.sidebar-top-button{
+    width:100px;
+    height:40px;
+    border-radius:10px;
+    margin-top:10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.sidebar-full-row{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top:10px
+}
+.sidebard-full-row-div{
+    width:95%;
+    border-radius:10px;
+    height:55px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size:18px
+}
+
+.sidebard-full-row-div:hover{
+    background-color: #F2F2F3;
+}
+.sidebard-collapse-btn{
+    position: absolute;
+    top: 50%;
+    right: -25px; 
+    transform: translateY(-50%);
+}
+.sidebard-collapse-btn:hover{
+    cursor: pointer;
+}
+.sidebard-collapse-btn > span{
+    font-size: 38px;
+    background-color: #bf7dd7;
+    padding: 10px; 
+    border-radius: 50%;
+}

@@ -1,0 +1,41 @@
+/* *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+} */
+
+.imgShift{
+    background-color: #36372f;
+    opacity: 0.7;
+    border: 1px solid white;
+    padding: 5px;
+    width: 30px;
+    position: absolute;
+    border-radius: 5px;
+    left: 2px;
+    top: 0px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.textShift{
+    border: 1px solid white;
+    padding: 5px;
+    width: 30px;
+    /* position: absolute; */
+    border-radius: 5px;
+    left: 2px;
+    top: 0px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.shift-btn:hover{
+    cursor: pointer;
+    opacity: 1;
+}

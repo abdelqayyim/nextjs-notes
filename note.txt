@@ -1,0 +1,6 @@
+For next time:
+    1 - Add ability to change language title 
+    2 - Add ability to add logo to language, rather than just text 
+
+Deployment:
+    1 - Deployed with Vercel 
